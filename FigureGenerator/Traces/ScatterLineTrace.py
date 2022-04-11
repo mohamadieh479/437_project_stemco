@@ -7,6 +7,14 @@ class ScatterLineTrace(_Trace):
         super()
         self.set_size(None)
         self.set_line_width(None)
+        self.line_dash=None
+    
+    def make_dashLine(self):
+        self.line_dash='dash'
+    def make_dotLine(self):
+        self.line_dash='dot'
+    def make_dashdotLine(self):
+        self.line_dash='dashdot'
         
     def set_size(self, size):
         self.marker_size = size
@@ -21,6 +29,7 @@ class ScatterLineTrace(_Trace):
                           name=self.name,
                           marker_color=self.marker_color,
 
+                          line_dash=self.line_dash,
                           line_width = self.line_width,
                           marker_size=self.marker_size,
                           mode='lines+markers'

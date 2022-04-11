@@ -10,16 +10,19 @@ class Figure:
         self.set_Title_font_size(None)
 
     def set_Title(self, title):
-        self.title_text=title
+        self.layout_title_text=title
 
     def set_Title_font_size(self, size):
-        self.title_font_size=size
+        self.layout_title_font_size=size
 
     def add_trace(self,trace):
         self.traces.append(trace)
 
     def render(self):
-        fig = go.Figure()
+        fig = go.Figure(
+            layout_title_text=self.layout_title_text,
+            layout_title_font_size=self.layout_title_font_size
+        )
         for i in self.traces:
             fig.add_trace(i.generate())
         return plot_to_html(fig)
