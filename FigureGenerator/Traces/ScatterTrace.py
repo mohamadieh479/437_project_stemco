@@ -1,4 +1,4 @@
-from FigureGenerator._Trace import _Trace
+from FigureGenerator.Traces._Trace import _Trace
 from plotly import graph_objs as go
 
 class ScatterTrace(_Trace):
@@ -17,5 +17,6 @@ class ScatterTrace(_Trace):
                           name=self.name,
                           marker_color=self.marker_color,
 
-                          marker_size=self.marker_size
+                          marker_size=self.marker_size,
+                          mode='markers'
                           )

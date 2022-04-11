@@ -1,4 +1,4 @@
-from FigureGenerator._Trace import _Trace
+from FigureGenerator.Traces._Trace import _Trace
 from plotly import graph_objs as go
 
 class BarTrace(_Trace):

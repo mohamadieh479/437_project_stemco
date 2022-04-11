@@ -1,8 +1,10 @@
 from Application import app
 
 from FigureGenerator import Figure
-from FigureGenerator.ScatterTrace import ScatterTrace
-from FigureGenerator.BarTrace import BarTrace
+from FigureGenerator.Traces.ScatterTrace import ScatterTrace
+from FigureGenerator.Traces.BarTrace import BarTrace
+from FigureGenerator.Traces.LineTrace import LineTrace
+from FigureGenerator.Traces.ScatterLineTrace import ScatterLineTrace
 
 from flask import render_template
 
@@ -14,10 +16,11 @@ def testing_figures():
     fig2 = Figure()
     fig2.set_Title("Testing fig2")
 
-    trace = ScatterTrace()
+    trace = ScatterLineTrace()
     trace.add_X_values([1,2,3,4,5])
     trace.add_Y_values([2,3,5,3,2])
     trace.set_size(20)
+    trace.set_line_width(10)
     trace.set_color("red")
     trace.set_name("ScatRandom")
 
