@@ -50,6 +50,8 @@ def testing_figures():
          datetime(year=2013, month=12, day=10),
          datetime(year=2014, month=1, day=10),
          datetime(year=2014, month=2, day=10)]
+    #dates = ["2013-10-10","2013-11-10","2013-12-10","2014-1-10","2014-2-10"]
+    #the two dates lists are identical and interchangeable
     
     candleTrace = CandleStickTrace()
     candleTrace.set_name("CandleTrace") # Yes you can add more lines and stuff on the same graph
