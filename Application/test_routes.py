@@ -5,6 +5,7 @@ from FigureGenerator.Traces.ScatterTrace import ScatterTrace
 from FigureGenerator.Traces.BarTrace import BarTrace
 from FigureGenerator.Traces.LineTrace import LineTrace
 from FigureGenerator.Traces.ScatterLineTrace import ScatterLineTrace
+from FigureGenerator.Traces.CandleStickTrace import CandleStickTrace
 
 from flask import render_template
 
@@ -13,6 +14,8 @@ def testing_figures():
     fig1 = Figure()
     fig1.set_Title("Testing fig1") # overall title
     fig1.set_Title_font_size(50) # title font size
+    fig1.set_xLabel("X LABEL") # x axis label
+    fig1.set_yLabel("Y LABEL") # y axis label
     
     fig2 = Figure()
     fig2.set_Title("Testing fig2")
@@ -36,5 +39,34 @@ def testing_figures():
 
     fig1.add_trace(trace)
     fig2.add_trace(trace2)
+    
+    
+    fig3 = Figure()
+    fig3.set_Title("Testing CandleStick")
+    
+    from datetime import datetime
+    dates = [datetime(year=2013, month=10, day=10),
+         datetime(year=2013, month=11, day=10),
+         datetime(year=2013, month=12, day=10),
+         datetime(year=2014, month=1, day=10),
+         datetime(year=2014, month=2, day=10)]
+    
+    candleTrace = CandleStickTrace()
+    candleTrace.set_name("CandleTrace") # Yes you can add more lines and stuff on the same graph
+    candleTrace.add_X_values(dates)
+    candleTrace.add_open_values([33.0, 33.3, 33.5, 33.0, 34.1]) #All 4 values need to be set or else you''l get an empty graph
+    candleTrace.add_low_values([32.7, 32.7, 32.8, 32.6, 32.8])
+    candleTrace.add_high_values([33.1, 33.3, 33.6, 33.2, 34.8])
+    candleTrace.add_close_values([33.0, 32.9, 33.3, 33.1, 33.1])
+    candleTrace.set_increasing_line_color("green")
+    candleTrace.set_decreasing_line_color("black")
 
-    return render_template("test_templates/testing_figures.html",title="hello",figure1=fig1.render(),figure2=fig2.render())
+    fig3.add_trace(candleTrace)
+
+
+    return render_template("test_templates/testing_figures.html",
+                            title="hello",
+                            figure1=fig1.render(),
+                            figure2=fig2.render(),
+                            figure3=fig3.render()
+                            )
