@@ -30,7 +30,7 @@ def populateFinancialDB():
         while count>=0:
             try:
                 # Getting the balance sheet data from the api
-                balance_sheet = requests.get(f"https://financialmodelingprep.com/api/v3/balance-sheet-statement/{company[0]}?period=quarterly&limit=120&apikey=b4f84c6c34f5357de23599be344e76c2")
+                balance_sheet = requests.get(f"https://financialmodelingprep.com/api/v3/balance-sheet-statement/{company[0]}?period=quarterly&limit=120&apikey=493b024806e6051d113e54b858816caf")
                 # Extracting the data from the API (initially retrieved as a Response object)
                 balance_sheet =balance_sheet.json() 
                 counter = 0
@@ -58,7 +58,7 @@ def populateFinancialDB():
         while count>=0:
             try:
                 #getting the balance sheet data from the api
-                income_statement = requests.get(f"https://financialmodelingprep.com/api/v3/income-statement/{company[0]}?period=quarterly&limit=120&apikey=b4f84c6c34f5357de23599be344e76c2")
+                income_statement = requests.get(f"https://financialmodelingprep.com/api/v3/income-statement/{company[0]}?period=quarterly&limit=120&apikey=493b024806e6051d113e54b858816caf")
                 #extracting the data from the api
                 income_statement =income_statement.json()
                 counter = 0
@@ -82,7 +82,7 @@ def populateFinancialDB():
         while count>=0:
             try:
                 #getting the balance sheet data from the api
-                cash_flow_statement = requests.get(f"https://financialmodelingprep.com/api/v3/cash-flow-statement/{company[0]}?period=quarterly&limit=120&apikey=b4f84c6c34f5357de23599be344e76c2")
+                cash_flow_statement = requests.get(f"https://financialmodelingprep.com/api/v3/cash-flow-statement/{company[0]}?period=quarterly&limit=120&apikey=493b024806e6051d113e54b858816caf")
                 #extracting the data from the api
                 cash_flow_statement = cash_flow_statement.json()
                 counter = 0

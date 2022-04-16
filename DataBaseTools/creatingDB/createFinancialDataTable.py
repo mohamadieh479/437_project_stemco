@@ -11,7 +11,7 @@ def createFinancialDataTable():
     company = "FB"
 
     #getting the balance sheet data from the api
-    balance_sheet = requests.get(f"https://financialmodelingprep.com/api/v3/balance-sheet-statement/{company}?period=quarterly&limit=120&apikey=b4f84c6c34f5357de23599be344e76c2")
+    balance_sheet = requests.get(f"https://financialmodelingprep.com/api/v3/balance-sheet-statement/{company}?period=quarterly&limit=120&apikey=493b024806e6051d113e54b858816caf")
 
     #extracting the data from the api
     balance_sheet =balance_sheet.json()
@@ -29,7 +29,7 @@ def createFinancialDataTable():
 
 
     #getting the income-statement data from the api
-    income_statement = requests.get(f"https://financialmodelingprep.com/api/v3/income-statement/{company}?period=quarterly&limit=120&apikey=b4f84c6c34f5357de23599be344e76c2")
+    income_statement = requests.get(f"https://financialmodelingprep.com/api/v3/income-statement/{company}?period=quarterly&limit=120&apikey=493b024806e6051d113e54b858816caf")
     #extracting the data from the api
     income_statement =income_statement.json()
 
@@ -50,7 +50,7 @@ def createFinancialDataTable():
 
 
     #getting the cash-flow-statement data from the api
-    cash_flow_statement = requests.get(f"https://financialmodelingprep.com/api/v3/cash-flow-statement/{company}?period=quarterly&limit=120&apikey=b4f84c6c34f5357de23599be344e76c2")
+    cash_flow_statement = requests.get(f"https://financialmodelingprep.com/api/v3/cash-flow-statement/{company}?period=quarterly&limit=120&apikey=493b024806e6051d113e54b858816caf")
     #extracting the data from the api
     cash_flow_statement =cash_flow_statement.json()
     #creating the cashflow statement table
