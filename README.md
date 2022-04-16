@@ -1,13 +1,13 @@
-# 437_project_stemco
-
-To run the app:  
-1-Activate the virtual environment:  
-  Open the project file in cmd, run the command: venv\Scripts\activate  
-2-Run using run.py  
-  run the command: python run.py  
-if that doesn't work : 
-  inside the virtual env, in the desired directory, use
-  a. set FLASK_APP=name.py
-  b. set FLASK_ENV=development
-  c. flask run 
+# 437_project_stemco  
   
+To run the app:		Double-click RUN.bat  
+Alternatively:  
+	-Activate the virtual environment(manually or through ActivateVenv.bat)  
+  	-Either run: 'python run.py'  
+	-Or run: 'set FLASK_APP=Application' followed by 'flask run'  
+  
+The database assumes a STEM database with password 'admin' is running locally  
+To initiate the database:	Double-click InitDatabase.bat  
+Alternatively:  
+	-Activate the virtual environment(manually or through ActivateVenv.bat)   
+	-run: 'set FLASK_APP=Application' followed by 'flask init-db'  

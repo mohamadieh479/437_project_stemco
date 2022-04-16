@@ -10,7 +10,7 @@ def getCompanies():
     # Retrieve the HTML page
     html = requests.get('https://en.wikipedia.org/wiki/Dow_Jones_Industrial_Average') # returns a Response object (200 ie succeeded)
     # To parse / read the object, use the beautiful soup library which extracts the HTML code from the response
-    soup = bs.BeautifulSoup(html.text)
+    soup = bs.BeautifulSoup(html.text,features="lxml")
 
     companies = []
 
