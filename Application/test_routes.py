@@ -72,3 +72,46 @@ def testing_figures():
                             figure2=fig2.render(),
                             figure3=fig3.render()
                             )
+
+from DataBaseTools.getStockPrice import getStockPrice
+
+@app.route("/testing_candleStickChart")
+def testing_candleStickChart():
+    df = getStockPrice("MMM")
+    
+    fig = Figure()
+    fig.set_Title("MMM stock history")
+    fig.set_xLabel("Date")
+    fig.set_yLabel("Price")
+    
+    trace = CandleStickTrace()
+    trace.set_name("MMM")
+    trace.add_X_values(df["Date"].tolist())
+    trace.add_open_values(df["Open"].tolist())
+    trace.add_low_values(df["Low"].tolist())
+    trace.add_high_values(df["High"].tolist())
+    trace.add_close_values(df["Close"].tolist())
+    trace.set_increasing_line_color("green")
+    trace.set_decreasing_line_color("red")
+    
+    fig.add_trace(trace)
+    
+    fig2 = Figure()
+    fig2.set_xLabel("Date")
+    fig2.set_yLabel("Volume") 
+    
+    volTrace = BarTrace()
+    volTrace.add_X_values(df["Date"].tolist())
+    volTrace.add_Y_values(df["Volume"].tolist())
+    volTrace.set_color("blue")
+    volTrace.set_name("Volume")
+    
+    fig2.add_trace(volTrace)
+    
+    return render_template("test_templates/testing_figures.html",
+                            title="MMM stock data",
+                            figure1=fig.render(),
+                            figure2=fig2.render()
+                            )
+    
+    
