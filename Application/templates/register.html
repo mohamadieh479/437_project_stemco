@@ -1,0 +1,54 @@
+<!doctype html>
+<html><head>
+   <meta charset="UTF-8">
+   <title> Register</title>
+   <link rel ="stylesheet" href = "./style/styleform.css">
+</head>
+   <body>
+      <div class = "container">
+         <div class = "title">Let's get started!</div>
+         <br>
+         <form action = '' method = "POST">
+            <button type="button" class="login-with-google-btn" >
+               Sign up with Google
+             </button>
+            
+         </form>
+         <div class = info>
+            <form action = '' method="POST">
+               <div class = "user-details">
+                  <div class =  "input-box">
+                     <span class = "details"> Full Name</span>
+                     <input type="text" name = fname placeholder = "Enter first name..." required>    
+                  </div>
+                  <div class =  "input-box">
+                     <span class = "details"> Last Name</span>
+                     <input type="text" name = lname placeholder = "Enter last name..." required> 
+                  </div>
+                  <div class =  "input-box">
+                     <span class = "details"> Username </span>
+                     <input type="text" name=username placeholder = "Enter username..." required>   
+                  </div>
+                  <div class =  "input-box">
+                     <span class = "details"> Email</span>
+                     <input type="text" name = email placeholder = "Enter email...">  
+                  </div>
+                  <div class =  "input-box">
+                     <span class = "details"> Password</span>
+                     <input type="text" name = password placeholder = "Enter password...">  
+                  </div>
+                  <div class =  "input-box">
+                     <span class = "details"> Confirm Password</span>
+                     <input type="text" name = age placeholder = "Re-enter password...">  
+                  </div>
+   
+               </div>
+               <div class = "button">
+                  <input type = "submit" value = "Register" name = "registration" />
+               </div>
+            </form>
+         </div>
+            
+      </div>
+   </body>
+</html>
