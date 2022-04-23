@@ -31,7 +31,7 @@ def createPriceTable():
 
     #pick the start and end times for retrieving the data
     #input for datetime is year,month,day
-    start = dt.datetime(2021,9,1)
+    start = dt.datetime(2017,9,1)
     end = dt.datetime.now()
 
 

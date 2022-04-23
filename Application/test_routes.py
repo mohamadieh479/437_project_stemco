@@ -114,4 +114,12 @@ def testing_candleStickChart():
                             figure2=fig2.render()
                             )
     
-    
+
+from ExpressFigures.FundamentalFigures import genEPSFigure,genPEFigure
+@app.route("/testing_ExpressFigures")
+def testing_ExpressFigures():
+    return render_template("test_templates/testing_figures.html",
+                            title="MMM stock data",
+                            figure1=genEPSFigure("AAPL").render(),
+                            figure2=genPEFigure("AAPL").render()
+                            )
