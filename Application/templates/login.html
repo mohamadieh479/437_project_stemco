@@ -2,18 +2,12 @@
 <html><head>
    <meta charset="UTF-8">
    <title> Register</title>
-   <link rel ="stylesheet" href = "./style/styleform.css">
+   <link rel ="stylesheet" href = "{{ url_for('static', filename='style/styleform.css') }}">
 </head>
    <body>
       <div class = "container">
          <div class = "title">Let's get started!</div>
          <br>
-         <form action = '' method = "POST">
-            <button type="button" class="login-with-google-btn" >
-               Continue with Google
-             </button>
-            
-         </form>
          <div class = info>
             <form action = '' method="POST">
                <div class = "user-details">
