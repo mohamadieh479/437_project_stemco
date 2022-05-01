@@ -17,12 +17,20 @@
                         <li> <a href = ""> Contact </a></li>
                     </ul>
                 </div>
+                {% if g.user %}
+                <div class = "sign-in">
+                    <ul>
+                        <li> <h1> {{ g.user.get_username() }} </h1></li>
+                    </ul>
+                </div>
+                {% else %}
                 <div class = "sign-in">
                     <ul>
                         <li> <a href = ""> Join as Guest </a></li>
                         <li> <a href = ""> <span class ="log">Sign In</span> </a></li>
                     </ul>
                 </div>
+                {% endif %}
             </nav>
             <img src ="{{ url_for('static', filename='assets/80.png') }}" class = "abab"/>
             <img src="{{ url_for('static', filename='assets/81.png') }}" class= "abb"/>
