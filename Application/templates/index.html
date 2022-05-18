@@ -27,7 +27,7 @@
                 <div class = "sign-in">
                     <ul>
                         <li> <a href = ""> Join as Guest </a></li>
-                        <li> <a href = ""> <span class ="log">Sign In</span> </a></li>
+                        <li> <a href = "/login"> <span class ="log">Sign In</span> </a></li>
                     </ul>
                 </div>
                 {% endif %}
@@ -38,14 +38,11 @@
             <img src ="{{ url_for('static', filename='assets/Right Graphic.png') }}" class ="purple"/>
             <img src="{{ url_for('static', filename='assets/bars.png') }}" class = "bars"/>
             <img src="{{ url_for('static', filename='assets/Trendline.png') }}" class = "trendline"/>
-            <a><img src = "{{ url_for('static', filename='assets/stem 1.png') }}" class = "stem1"/> </a>
-            <a><img src = "{{ url_for('static', filename='assets/stem 1.png') }}" class = "stem2"/> </a>
-            <a ><img src = "{{ url_for('static', filename='assets/stem 1.png') }}" class = "stem3"/> </a>
-            <a ><img src = "{{ url_for('static', filename='assets/stem 1.png') }}" class = "stem4"/> </a>
+           
             <div class = "text-box">
                 <h1><span class="fin">Financial analysis </span>has <br>never been easier</h1>
                 <p>Stem Co. is a financial platform that analyzes popular <br> stocks in the market through a large set of tools and<br> charts.</p>
-               <br> <br> <a href ="" class="hero-btn">Sign Up</a>
+               <br> <br> <a href ="/register" class="hero-btn">Sign Up</a>
             </div>
             
 
