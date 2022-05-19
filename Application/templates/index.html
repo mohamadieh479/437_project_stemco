@@ -80,9 +80,18 @@
             <p class = "ourcompanies">Our Companies</p>
             <p class ="txt">The stocks our platform offers encompass all companies<br> enlisted in the Dow Jones Index. Get started and select a <br>company of your choice.</p>
             <div id = container>
+                <form action = '/candleStickChart' method = 'GET'>
+
                 <div class = "searchbutton">
-                    <input type="text" id="searchInput" placeholder="Select a company..">
-                    <input type="submit" name = "" value = "Select">
+                    <select name = "company" id = "searchInput" required>
+                        <option value="" disabled selected>Select a company...</option>
+                        {%for row in options1 %}
+                        <option value = {{row[1]}}>{{row[0]}}</option>
+                        {% endfor %}
+                     </select>
+                 <!--   <input type="text" id="searchInput" placeholder="Select a company..">-->
+                    <input type="submit" name = "" value = "Select" >
+                </form>
                 </div>            
                 <img src ="{{ url_for('static', filename='assets/bigstem.png') }}" id = "bigstem">
             </div>
