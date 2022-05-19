@@ -9,11 +9,10 @@
             <img src="{{ url_for('static', filename='assets/Ellipse 4.png') }}" class ="leftmost"/>
 
             <nav>
-                <a href = "index.html"><img src="{{ url_for('static', filename='assets/stemco 1.png') }}"></a>
+                <a href = "/"><img src="{{ url_for('static', filename='assets/stemco 1.png') }}"></a>
                 <div class = "nav-links">
                     <ul>
                         <li> <a href = ""> Stocks </a></li>
-                        <li> <a href = ""> Community </a></li>
                         <li> <a href = ""> Contact </a></li>
                     </ul>
                 </div>
@@ -21,6 +20,8 @@
                 <div class = "sign-in">
                     <ul>
                         <li> <h1> {{ g.user.get_username() }} </h1></li>
+                        <li><h1><a href = "/logout">Log out</a></h1>
+                        </li>
                     </ul>
                 </div>
                 {% else %}
@@ -42,7 +43,9 @@
             <div class = "text-box">
                 <h1><span class="fin">Financial analysis </span>has <br>never been easier</h1>
                 <p>Stem Co. is a financial platform that analyzes popular <br> stocks in the market through a large set of tools and<br> charts.</p>
-               <br> <br> <a href ="/register" class="hero-btn">Sign Up</a>
+                {% if not g.user %}
+                <br> <br> <a href ="/register" class="hero-btn">Sign Up</a>
+                {%endif%}
             </div>
             
 
