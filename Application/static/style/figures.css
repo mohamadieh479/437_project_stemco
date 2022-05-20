@@ -14,12 +14,29 @@ h1{
     font-family: 'Jost';
 }
 
+.company{
+    font-size: 40px;
+}
+
+.company:after{
+    content: '';
+    width: 101px;
+    height: 8px;
+    background: linear-gradient(250.46deg, #8468F5 72.09%, #EC74E7 352.57%);
+    mix-blend-mode: normal;
+    opacity: 0.31;
+    border-radius: 4px;
+    display: block;
+    margin-left: 46.5%;
+}
+
 .wrapper{
     text-align: center;
 }
 
 p{
     font-family: 'Roboto';
+    font-size: 20px;
 }
 
 .buttons{
@@ -28,3 +45,45 @@ p{
     gap: 40px;
 }
 
+.buttons button{
+    border: 0px;
+    background: linear-gradient(87.86deg, #EC74E7 -45.12%, #8468F5 74.37%);
+    border-radius: 30px;
+    color: white;
+    width: 192px;
+    height: 53px;
+    text-align: center;
+    font-family: 'Jost';
+    font-size: 20px;
+    font-weight: 400;
+}
+
+button:hover{
+    background: #8468F5;
+    font-weight: 700;
+}
+
+nav{
+    padding-left: 30px;
+    padding-top: 20px;
+    display:flex;
+    gap: 30px;
+}
+
+nav button{
+    border: 0px;
+    background: #8468F5;
+    border-radius: 25px;
+    color: white;
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    font-family: 'Jost';
+    font-size: 18px;
+    font-weight: 400; 
+}
+
+.figures{
+    display: flex;
+    flex-direction: column;
+}

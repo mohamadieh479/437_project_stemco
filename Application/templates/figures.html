@@ -5,28 +5,30 @@
     </head>
 <body>
     <nav>
-        <button> < Back </button>
+        <a href = '/'><button> < Back </button></a>
         <select name = "company" id = "searchInput" required>
             <option value="" disabled selected>Select another company...</option>
-                            {%for row in options1 %}
-                            <option value = {{row[1]}}>{{row[0]}}</option>
-                            {% endfor %}
+                    {%for row in options1 %}
+                        <option value = {{row[1]}}>{{row[0]}}</option>
+                    {% endfor %}
         </select>
     </nav>
-    <h1>{{company}}</h1>
-
+    <h1 class = 'company'>{{company}}</h1>
+<br>
     <div class = 'wrapper'>
         <p>Below is an accurate depiction of {{company}}'s stock price fluctuation. For more insights on {{company}}'s performance, select one type of analysis to run:
         </p>
             <br> 
         <div class = 'buttons'>
-            <button> Technical Analysis</button>
-            <button> Fundamental Analysis</button>  
+            <button> Technical </button>
+            <button> Fundamental </button>  
         </div> 
     </div>
-    {{ figure1 }}
-    {{ figure2 }}
-    {{ figure3 }}
+    <div class = 'figures'>
+        {{ figure1 }}
+        {{ figure2 }}
+        {{ figure3 }}
+    </div>
 </body>
 
 
