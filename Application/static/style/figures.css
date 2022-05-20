@@ -87,3 +87,15 @@ nav button{
     display: flex;
     flex-direction: column;
 }
+
+.choose{
+    display: flex;
+    gap: 10px;
+    
+}
+
+.choose input{
+    border: 0px;
+    border-radius: 20px;
+    width: 100px;
+}
