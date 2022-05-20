@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>{{company}}</title>
+        <link rel ='stylesheet' href = '../static/style/figures.css'>
+    </head>
+<body>
+    <nav>
+        <button> < Back </button>
+        <select name = "company" id = "searchInput" required>
+            <option value="" disabled selected>Select another company...</option>
+                            {%for row in options1 %}
+                            <option value = {{row[1]}}>{{row[0]}}</option>
+                            {% endfor %}
+        </select>
+    </nav>
+    <h1>{{company}}</h1>
+
+    <div class = 'wrapper'>
+        <p>Below is an accurate depiction of {{company}}'s stock price fluctuation. For more insights on {{company}}'s performance, select one type of analysis to run:
+        </p>
+            <br> 
+        <div class = 'buttons'>
+            <button> Technical Analysis</button>
+            <button> Fundamental Analysis</button>  
+        </div> 
+    </div>
+    {{ figure1 }}
+    {{ figure2 }}
+    {{ figure3 }}
+</body>
+
+
+</html>

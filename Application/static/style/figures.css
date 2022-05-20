@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@500&family=Roboto:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@100;300;400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'League Spartan';
+
+}
+
+h1{
+    padding-top: 20px;
+    text-align: center;
+    font-family: 'Jost';
+}
+
+.wrapper{
+    text-align: center;
+}
+
+p{
+    font-family: 'Roboto';
+}
+
+.buttons{
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
