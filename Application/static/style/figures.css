@@ -61,6 +61,7 @@ p{
 button:hover{
     background: #8468F5;
     font-weight: 700;
+    cursor: pointer;
 }
 
 nav{
@@ -86,6 +87,8 @@ nav button{
 .figures{
     display: flex;
     flex-direction: column;
+    align-items: center;
+
 }
 
 .choose{
@@ -99,3 +102,60 @@ nav button{
     border-radius: 20px;
     width: 100px;
 }
+
+.popup{
+    visibility: hidden;
+    width: 400px;
+    background: #fff;
+    border-radius: 6px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    padding: 0 30px 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.open-popup{
+    visibility: visible;
+}
+
+.popup .indicators{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.popup .indicators-list{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.popup .item{
+    padding: 10px 20px;
+}
+
+.popup .bttn{
+    border: 0px;
+    background: #8468F5;
+    border-radius: 25px;
+    color: white;
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    font-family: 'Jost';
+    font-size: 18px;
+    font-weight: 400; 
+}
+
+.popup .bttn:hover{
+    background: #623df5;
+    cursor: pointer;    
+}
+
+.popup span{
+    cursor: pointer;
+     color:red;
+    }
+    
+.low-opacity{opacity: 0.4}

@@ -26,7 +26,7 @@
         </p>
             <br> 
         <div class = 'buttons'>
-            <button> Technical </button>
+            <button id = 'pop' onclick = "openPopup()"> Technical </button>
             <button> Fundamental </button>  
         </div> 
     </div>
@@ -35,6 +35,50 @@
         {{ figure2 }}
         {{ figure3 }}
     </div>
+
+    <div class = 'popup' id = 'popup'>
+        <h1>Technical Analysis</h1>
+        <p> In order to run technical analysis, select at least one indicator:</p>
+        <form method = 'GET' class = 'indicators'>
+            <div class = 'indicators-list'>
+                <div class = 'item'> 
+                    <input type="checkbox" id="Bollinger Bands" name="bollinger" value="BB">
+                    <label for="bollinger"> Bollinger Bands </label><br>
+                </div>
+                <div class = 'item'>
+                    <input type="checkbox" id="RSI" name="RSI" value="RSI">
+                    <label for="RSI"> RSI </label><br>
+                </div>
+                <div class = 'item'>
+                    <input type="checkbox" id="MA" name="ma" value="MA">
+                    <label for="ma"> Moving Average </label><br>
+                </div>
+                <div class ='item'>
+                    <input type="checkbox" id="EMA" name="ema" value="EMA">
+                    <label for="ema"> Exponential Moving Average </label><br>
+                </div>
+                <div class ='item'>
+                    <input type="checkbox" id="ATR" name="atr" value="ATR">
+                    <label for="atr"> Average True Range </label><br>
+                </div>
+            </div>
+            <input type = 'submit' name = '' value ='Submit' class ='bttn' onclick = 'closePopup()'>
+        </form>
+        <br>
+        <span onclick = 'closePopup()'>X Close </span>
+    </div>
+    <script>
+        let popup = document.getElementById('popup');
+        function openPopup(){
+            popup.classList.add('open-popup')
+            body.classList.add('low-opacity')
+
+        }
+        function closePopup(){
+            popup.classList.remove('open-popup')
+            body.classList.remove('low-opacity')
+        }
+    </script>
 </body>
 
 
