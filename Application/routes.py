@@ -86,7 +86,7 @@ def candleStickChart():
 
             elif indicator == 'MA':
                 window = request.args.get('indicators_ma')
-                if window is None:
+                if window == '':
                     window = 2
                 window = int(window)
                 df = technicalAn.movingAverage(name, window)
@@ -95,7 +95,7 @@ def candleStickChart():
 
             elif indicator == 'EMA':
                 window = request.args.get('indicators_ema')
-                if window is None:
+                if window == '':
                     window = 2
                 window = int(window)
                 df = technicalAn.exponentialMovingAverage(name, window)
