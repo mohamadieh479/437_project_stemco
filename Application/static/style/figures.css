@@ -161,3 +161,13 @@ nav button{
 .low-opacity{
     opacity: 1
 }
+
+.clear{
+    padding-left: 90px;
+}
+.clear input{
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    padding: 10px 40px;
+}

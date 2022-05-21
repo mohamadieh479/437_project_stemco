@@ -24,6 +24,7 @@ def index():
 def candleStickChart():
     select = getCompanies()
     name = request.args.get('company')
+    indicators = request.args.getlist('indicators')
     df = getStockPrice(name)
 
     fig = Figure()
@@ -75,6 +76,24 @@ def candleStickChart():
                 df = technicalAn.ATR(name)
                 atr = technicalAn.handleRequest(x_values, df, 'ATR')
                 fig.add_trace(atr)
+
+            elif indicator == 'MA':
+                window = request.args.get('indicators_ma')
+                if window is None:
+                    window = 2
+                window = int(window)
+                df = technicalAn.movingAverage(name, window)
+                ma = technicalAn.handleRequest(x_values, df, 'MA')
+                fig.add_trace(ma)
+
+            elif indicator == 'EMA':
+                window = request.args.get('indicators_ema')
+                if window is None:
+                    window = 2
+                window = int(window)
+                df = technicalAn.exponentialMovingAverage(name, window)
+                ma = technicalAn.handleRequest(x_values, df, 'EMA')
+                fig.add_trace(ma)
 
     return render_template("figures.html",
                            title="%s stock data" % (name),

@@ -103,8 +103,17 @@ def handleRequest(x_values, df, indicator):
         ma.add_X_values(x_values)
         ma.add_Y_values(df.tolist())
         ma.set_name("Moving Average")
-        ma.set_color("rgb(16,295,123")
+        ma.set_color("rgb(16,295,123)")
         ma.set_size(1)
         return ma
+
+    elif indicator == 'EMA':
+        ema = ScatterLineTrace()
+        ema.add_X_values(x_values)
+        ema.add_Y_values(df.tolist())
+        ema.set_name("Exponential Moving Average")
+        ema.set_color("rgb(165,5,13)")
+        ema.set_size(1)
+        return ema
     else:
         return None

@@ -31,6 +31,10 @@
             <button> Fundamental </button>  
         </div> 
     </div>
+    <form class = 'clear' action ="/candleStickChart">
+        <input type="hidden" name ="company" value ={{company}}>
+        <input type = "submit" value = "x Clear all filters"> 
+    </form>
     <div class = 'figures'>
         {{ figure1 }}
         {{ figure2 }}
@@ -52,12 +56,14 @@
                     <label for="RSI"> RSI </label><br>
                 </div>
                 <div class = 'item'>
-                    <input type="checkbox" id="MA" name="indicators" value="MA">
+                    <input type="checkbox" id="MA" name="indicators" value="MA" onclick="appear('MA','window')">
                     <label for="ma"> Moving Average </label><br>
+                    <input type = 'number' id ='window' name ='indicators_ma' min="2">
                 </div>
                 <div class ='item'>
-                    <input type="checkbox" id="EMA" name="indicators" value="EMA">
+                    <input type="checkbox" id="EMA" name="indicators" value="EMA" onclick="appear('EMA','ewindow')">
                     <label for="ema"> Exponential Moving Average </label><br>
+                    <input type = 'number' id ='ewindow' name ='indicators_ema' min="2">
                 </div>
                 <div class ='item'>
                     <input type="checkbox" id="ATR" name="indicators" value="ATR">
@@ -74,11 +80,18 @@
         function openPopup(){
             popup.classList.add('open-popup')
             document.body.classList.add('low-opacity')
-
+            appear("MA",'window'); appear('EMA','ewindow');
         }
         function closePopup(){
             popup.classList.remove('open-popup')
             document.body.classList.remove('low-opacity')
+        }
+
+        function appear(box, input){
+            let check = document.getElementById(box);
+            let window = document.getElementById(input);
+            if(check.checked == true){window.style.display="flex"}
+            else{window.style.display="none"}
         }
     </script>
 </body>
