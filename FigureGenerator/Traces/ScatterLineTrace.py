@@ -4,7 +4,7 @@ from plotly import graph_objs as go
 class ScatterLineTrace(_Trace):
 
     def __init__(self):
-        super()
+        super().__init__()
         self.set_size(None)
         self.set_line_width(None)
         self.line_dash=None

@@ -1,4 +1,5 @@
-from ExpressFigures.FundamentalFigures import genEPSFigure, genPEFigure
+from ExpressFigures.FundamentalFigures import *
+from ExpressFigures.TechnicalFigures import *
 from DataBaseTools.getStockPrice import getStockPrice
 from Application import app
 
@@ -80,8 +81,6 @@ def testing_figures():
                            figure3=fig3.render()
                            )
 
-### This has been moved to the routes.py file ###
-
 
 @app.route("/testing_candleStickChart")
 def testing_candleStickChart():
@@ -127,6 +126,14 @@ def testing_candleStickChart():
 def testing_ExpressFigures():
     return render_template("test_templates/testing_figures.html",
                            title="MMM stock data",
-                           figure1=genEPSFigure("AAPL").render(),
-                           figure2=genPEFigure("AAPL").render()
+                           figure1=genEPSFigure("MMM").render(),
+                           figure2=genPEFigure("MMM").render(),
+                           figure3=genQuickRatioFigure("MMM").render(),
+                           figure4=genWorkingCapitalRatioFigure("MMM").render(),
+                           figure5=genROEFigure("MMM").render(),
+                           figure6=genRSIFigure("MMM").render(),
+                           figure7=genATRFigure("MMM").render(),
+                           figure8=genCandleStickWithInd("MMM",bb=True,moving_average=True,exponential_moving_average=True,avg_window=100).render(),
+                           figure9=genVolumeFigure("MMM").render()
                            )
+

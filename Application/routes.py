@@ -10,7 +10,7 @@ from FigureGenerator.Traces.LineTrace import LineTrace
 from FigureGenerator.Traces.ScatterLineTrace import ScatterLineTrace
 from FigureGenerator.Traces.CandleStickTrace import CandleStickTrace
 from DataBaseTools.getCompanies import getCompanies
-from DataBaseTools import technicalAn
+from Analysis import technicalAn
 
 
 @app.route("/")

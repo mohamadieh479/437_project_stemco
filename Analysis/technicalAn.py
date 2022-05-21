@@ -1,60 +1,53 @@
 import pandas as pd
 from ta.volatility import BollingerBands, AverageTrueRange
 from ta.momentum import rsi
-from ta.utils import _sma, _ema
+from ta.utils import _sma,_ema
 from DataBaseTools.getStockPrice import getStockPrice
 from FigureGenerator.Traces.ScatterTrace import ScatterTrace
 from FigureGenerator.Traces.ScatterLineTrace import ScatterLineTrace
 
-
-# Bollinger Bands
-# this function takes as input a ticker and returns a dataframe of the bollingerband values (upper_band, moving_average, lower_band)
-# Naming BB to not have conflict with library naming
-
-
+#Bollinger Bands
+#this function takes as input a ticker and returns a dataframe of the bollingerband values (upper_band, moving_average, lower_band)
+#Naming BB to not have conflict with library naming
 def BB(ticker):
-    data = getStockPrice(ticker)
+    data= getStockPrice(ticker)
     bb_indicator = BollingerBands(data['Close'])
     data['upper_band'] = bb_indicator.bollinger_hband()
     data['lower_band'] = bb_indicator.bollinger_lband()
     data['moving_average'] = bb_indicator.bollinger_mavg()
-    return data[['upper_band', 'moving_average', 'lower_band']]
+    return data[['upper_band','moving_average','lower_band']]
 
-# RSI
-# this function takes as input a ticker and returns a dataframe of the RSI values
-
-
+#RSI
+#this function takes as input a ticker and returns a dataframe of the RSI values
 def RSI(ticker):
-    data = getStockPrice(ticker)
+    data= getStockPrice(ticker)
     data['RSI'] = rsi(data['Close'])
-    return data['RSI']
+    return data[['RSI','Date']]
 
 
-# movingAverage
-# this function takes as input a ticker and the size of the window and returns a dataframe of the moving average
-def movingAverage(ticker, window):
-    data = getStockPrice(ticker)
-    data['movingAverage'] = _sma(data['Close'], window)
+
+#movingAverage
+#this function takes as input a ticker and the size of the window and returns a dataframe of the moving average
+def movingAverage(ticker,window):
+    data= getStockPrice(ticker)
+    data['movingAverage'] = _sma(data['Close'],window)
     return data['movingAverage']
 
 
-# exponential moving Average
-# this function takes as input a ticker and the size of the window and returns a dataframe of the exponential moving average
-def exponentialMovingAverage(ticker, window):
-    data = getStockPrice(ticker)
-    data['exponentialMovingAverage'] = _ema(data['Close'], window)
-    return data['exponentialMovingAverage']
+#exponential moving Average
+#this function takes as input a ticker and the size of the window and returns a dataframe of the exponential moving average
+def exponentialMovingAverage(ticker,window):
+    data= getStockPrice(ticker)
+    data['exponentialMovingAverage'] = _ema(data['Close'],window)
+    return data['exponentialMovingAverage'] 
 
-# AverageTrueRange
-# this function takes as input a ticker and returns a dataframe of the average true range
-
-
+#AverageTrueRange
+#this function takes as input a ticker and returns a dataframe of the average true range
 def ATR(ticker):
-    data = getStockPrice(ticker)
-    atr_indicator = AverageTrueRange(data['High'], data['Low'], data['Close'])
+    data= getStockPrice(ticker)
+    atr_indicator = AverageTrueRange(data['High'],data['Low'],data['Close'])
     data['ATR'] = atr_indicator.average_true_range()
-    return data['ATR']
-
+    return data[['ATR','Date']]
 
 def handleRequest(x_values, df, indicator):
     if indicator == 'BB':
@@ -83,7 +76,7 @@ def handleRequest(x_values, df, indicator):
     elif indicator == 'RSI':
         rsi = ScatterLineTrace()
         rsi.add_X_values(x_values)
-        rsi.add_Y_values(df.tolist())
+        rsi.add_Y_values(df["RSI"].tolist())
         rsi.set_name("Relative Strength Index")
         rsi.set_color("rgb(251,192,45)")
         rsi.set_size(1)
@@ -92,7 +85,7 @@ def handleRequest(x_values, df, indicator):
     elif indicator == 'ATR':
         atr = ScatterLineTrace()
         atr.add_X_values(x_values)
-        atr.add_Y_values(df.tolist())
+        atr.add_Y_values(df["ATR"].tolist())
         atr.set_name("Average True Range")
         atr.set_color("rgb(126,87,194)")
         atr.set_size(1)
