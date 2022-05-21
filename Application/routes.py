@@ -56,8 +56,15 @@ def candleStickChart():
     volTrace.set_name("Volume")
 
     fig2.add_trace(volTrace)
+    fig3 = []
+
+    if 'ATR' in indicators or 'RSI' in indicators:
+        fig3 = Figure()
+        fig3.set_Title("%s indicators:" % (name))
+        fig3.set_xLabel("Date")
+        fig3.set_yLabel("Price")
+
     if indicators is not None:
-        print(indicators)
         for indicator in indicators:
             if indicator == 'BB':
                 df = technicalAn.BB(name)
@@ -70,12 +77,12 @@ def candleStickChart():
             elif indicator == 'RSI':
                 df = technicalAn.RSI(name)
                 rsi = technicalAn.handleRequest(x_values, df, 'RSI')
-                fig.add_trace(rsi)
+                fig3.add_trace(rsi)
 
             elif indicator == 'ATR':
                 df = technicalAn.ATR(name)
                 atr = technicalAn.handleRequest(x_values, df, 'ATR')
-                fig.add_trace(atr)
+                fig3.add_trace(atr)
 
             elif indicator == 'MA':
                 window = request.args.get('indicators_ma')
@@ -95,11 +102,14 @@ def candleStickChart():
                 ma = technicalAn.handleRequest(x_values, df, 'EMA')
                 fig.add_trace(ma)
 
+    if not isinstance(fig3, list):
+        fig3 = fig3.render()
+
     return render_template("figures.html",
                            title="%s stock data" % (name),
                            figure1=fig.render(),
                            figure2=fig2.render(),
-                           figure3=df,
+                           figure3=fig3,
                            company=name,
                            options1=select
                            )
