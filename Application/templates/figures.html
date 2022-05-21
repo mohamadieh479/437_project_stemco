@@ -2,6 +2,7 @@
     <head>
         <title>{{company}}</title>
         <link rel ='stylesheet' href = '../static/style/figures.css'>
+        
     </head>
 <body>
     <nav>
@@ -39,26 +40,27 @@
     <div class = 'popup' id = 'popup'>
         <h1>Technical Analysis</h1>
         <p> In order to run technical analysis, select at least one indicator:</p>
-        <form method = 'GET' class = 'indicators'>
+        <form action = "/candleStickChart" class = 'indicators'>
+            <input type="hidden" name="company" value={{company}} />
             <div class = 'indicators-list'>
                 <div class = 'item'> 
-                    <input type="checkbox" id="Bollinger Bands" name="bollinger" value="BB">
+                    <input type="checkbox" id="Bollinger Bands" name="indicators" value="BB">
                     <label for="bollinger"> Bollinger Bands </label><br>
                 </div>
                 <div class = 'item'>
-                    <input type="checkbox" id="RSI" name="RSI" value="RSI">
+                    <input type="checkbox" id="RSI" name="indicators" value="RSI">
                     <label for="RSI"> RSI </label><br>
                 </div>
                 <div class = 'item'>
-                    <input type="checkbox" id="MA" name="ma" value="MA">
+                    <input type="checkbox" id="MA" name="indicators" value="MA">
                     <label for="ma"> Moving Average </label><br>
                 </div>
                 <div class ='item'>
-                    <input type="checkbox" id="EMA" name="ema" value="EMA">
+                    <input type="checkbox" id="EMA" name="indicators" value="EMA">
                     <label for="ema"> Exponential Moving Average </label><br>
                 </div>
                 <div class ='item'>
-                    <input type="checkbox" id="ATR" name="atr" value="ATR">
+                    <input type="checkbox" id="ATR" name="indicators" value="ATR">
                     <label for="atr"> Average True Range </label><br>
                 </div>
             </div>
@@ -71,12 +73,12 @@
         let popup = document.getElementById('popup');
         function openPopup(){
             popup.classList.add('open-popup')
-            body.classList.add('low-opacity')
+            document.body.classList.add('low-opacity')
 
         }
         function closePopup(){
             popup.classList.remove('open-popup')
-            body.classList.remove('low-opacity')
+            document.body.classList.remove('low-opacity')
         }
     </script>
 </body>

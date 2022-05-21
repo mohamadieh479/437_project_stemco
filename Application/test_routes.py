@@ -80,6 +80,8 @@ def testing_figures():
                            figure3=fig3.render()
                            )
 
+### This has been moved to the routes.py file ###
+
 
 @app.route("/testing_candleStickChart")
 def testing_candleStickChart():

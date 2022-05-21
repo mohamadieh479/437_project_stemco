@@ -10,6 +10,7 @@ from FigureGenerator.Traces.LineTrace import LineTrace
 from FigureGenerator.Traces.ScatterLineTrace import ScatterLineTrace
 from FigureGenerator.Traces.CandleStickTrace import CandleStickTrace
 from DataBaseTools.getCompanies import getCompanies
+from DataBaseTools import technicalAn
 
 
 @app.route("/")
@@ -19,10 +20,13 @@ def index():
     return render_template("index.html", options1=select)
 
 
-@app.route("/candleStickChart")
+@app.route("/candleStickChart", methods=['GET', 'POST'])
 def candleStickChart():
     select = getCompanies()
     name = request.args.get('company')
+    print(name)
+   # indicators = ['ATR']
+    indicators = request.args.get('indicators')
     df = getStockPrice(name)
 
     fig = Figure()
@@ -32,6 +36,7 @@ def candleStickChart():
 
     trace = CandleStickTrace()
     trace.set_name(name)
+    x_values = df["Date"].tolist()
     trace.add_X_values(df["Date"].tolist())
     trace.add_open_values(df["Open"].tolist())
     trace.add_low_values(df["Low"].tolist())
@@ -53,11 +58,32 @@ def candleStickChart():
     volTrace.set_name("Volume")
 
     fig2.add_trace(volTrace)
+    if indicators is not None:
+        indicators = indicators.split('\n')
+        for indicator in indicators:
+            if indicator == 'BB':
+                df = technicalAn.BB(name)
+                upper_band, lower_band, moving_average = technicalAn.handleRequest(
+                    x_values, df, 'BB')
+                fig.add_trace(upper_band)
+                fig.add_trace(lower_band)
+                fig.add_trace(moving_average)
+
+            elif indicator == 'RSI':
+                df = technicalAn.RSI(name)
+                rsi = technicalAn.handleRequest(x_values, df, 'RSI')
+                fig.add_trace(rsi)
+
+            elif indicator == 'ATR':
+                df = technicalAn.ATR(name)
+                atr = technicalAn.handleRequest(x_values, df, 'ATR')
+                fig.add_trace(atr)
 
     return render_template("figures.html",
                            title="%s stock data" % (name),
                            figure1=fig.render(),
                            figure2=fig2.render(),
+                           figure3=df,
                            company=name,
                            options1=select
                            )
