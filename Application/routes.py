@@ -24,9 +24,6 @@ def index():
 def candleStickChart():
     select = getCompanies()
     name = request.args.get('company')
-    print(name)
-   # indicators = ['ATR']
-    indicators = request.args.get('indicators')
     df = getStockPrice(name)
 
     fig = Figure()
@@ -59,7 +56,7 @@ def candleStickChart():
 
     fig2.add_trace(volTrace)
     if indicators is not None:
-        indicators = indicators.split('\n')
+        print(indicators)
         for indicator in indicators:
             if indicator == 'BB':
                 df = technicalAn.BB(name)
