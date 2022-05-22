@@ -17,6 +17,18 @@ def BB(ticker):
     data['moving_average'] = bb_indicator.bollinger_mavg()
     return data[['upper_band','moving_average','lower_band']]
 
+# this function returns a recommendation to buy or sell using the bollinger bands indicator. 1 is a buy signal. 0 is neutral. -1 is a sell signal
+def BB_recommendation(ticker):
+    price = getStockPrice(ticker).iloc[-1]['Close']
+    BBValues = BB(ticker).iloc[-1]
+    
+    if(price>BBValues['upper_band']):
+        return -1
+    elif (price<BBValues['lower_band']):
+        return 1
+    else:
+        return 0
+
 #RSI
 #this function takes as input a ticker and returns a dataframe of the RSI values
 def RSI(ticker):
@@ -24,7 +36,15 @@ def RSI(ticker):
     data['RSI'] = rsi(data['Close'])
     return data[['RSI','Date']]
 
-
+# this function returns a recommendation to buy or sell using the RSI indicator. 1 is a buy signal. 0 is neutral. -1 is a sell signal
+def RSI_recommendation(ticker):
+    lastRSI = RSI(ticker).iloc[-1]['RSI']
+    if lastRSI>70:
+        return -1
+    elif lastRSI<30:
+        return 1
+    else:
+        return 0
 
 #movingAverage
 #this function takes as input a ticker and the size of the window and returns a dataframe of the moving average
@@ -33,6 +53,16 @@ def movingAverage(ticker,window):
     data['movingAverage'] = _sma(data['Close'],window)
     return data['movingAverage']
 
+# this function returns a recommendation to buy or sell using the moving average indicator. 1 is a buy signal. -1 is a sell signal
+def MA_recommendation(ticker):
+    lastMA20 = movingAverage(ticker,20).iloc[-1]
+    lastMA50 = movingAverage(ticker,50).iloc[-1]
+    if lastMA20>=lastMA50:
+        return 1
+    else:
+        return -1
+
+
 
 #exponential moving Average
 #this function takes as input a ticker and the size of the window and returns a dataframe of the exponential moving average
@@ -40,6 +70,15 @@ def exponentialMovingAverage(ticker,window):
     data= getStockPrice(ticker)
     data['exponentialMovingAverage'] = _ema(data['Close'],window)
     return data['exponentialMovingAverage'] 
+
+# this function returns a recommendation to buy or sell using the moving average indicator. 1 is a buy signal. -1 is a sell signal
+def EMA_recommendation(ticker):
+    lastEMA20 = exponentialMovingAverage(ticker,20).iloc[-1]
+    lastEMA50 = exponentialMovingAverage(ticker,50).iloc[-1]
+    if lastEMA20>=lastEMA50:
+        return 1
+    else:
+        return -1
 
 #AverageTrueRange
 #this function takes as input a ticker and returns a dataframe of the average true range
