@@ -4,15 +4,11 @@ import pandas as pd
 
 
 #this function will initialize the cash of new users to 0
-def init_cash(username,password):
+def init_cash(id):
     conn = psycopg2.connect(
         database="STEM", user='postgres',
         password='admin', host='localhost', port='5432')
     
-    query = "select id from users where username = '{}' and password='{}'".format(username,password)
-    cursor = conn.cursor()
-    cursor.execute(query)
-    id = cursor.fetchall()[0][0]
     
     query="insert into usercash values({},0)".format(id)
     cursor = conn.cursor()

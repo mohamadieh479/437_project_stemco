@@ -12,8 +12,6 @@ def add_user(firstname,lastname,username,email,password):
     cursor.close()
 
     conn.close()
-    
-    init_cash(username,password)
 
 
 def fetch_user_ID(id):
