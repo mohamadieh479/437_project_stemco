@@ -1,5 +1,7 @@
 import psycopg2
 from getStockPrice import getStockPrice
+import pandas as pd
+
 
 #this function will initialize the cash of new users to 0
 def init_cash(username,password):
@@ -29,6 +31,18 @@ def set_cash(userID,cash):
     cursor.execute(query)
     conn.commit()
 
+
+def get_cash(userId):
+    conn = psycopg2.connect(
+        database="STEM", user='postgres',
+        password='admin', host='localhost', port='5432')
+
+    query = "select cash from usercash where user_id = '"+str(userId)+"'"
+    cursor = conn.cursor()
+    cursor.execute(query)
+    cash = cursor.fetchall()[0][0]
+
+    return cash
 
 #this function will add a number of stocks of a given company to a users portfolio. It will raise an exception if the cash of the user isn't enough
 def buy_stock(userId,ticker,quantity):
@@ -118,4 +132,29 @@ def sell_stock(userId,ticker,quantity):
         cursor = conn.cursor()
         cursor.execute(query)
         conn.commit()
+
+
+#this function takes as input userId and returns a dataframe showing what stocks the user owns and their values
+def view_portfolio(userId):
+    conn = psycopg2.connect(
+        database="STEM", user='postgres',
+        password='admin', host='localhost', port='5432')
+    
+    query ="select ticker,nb_shares from userportfolio where user_id = {}".format(userId)
+    cursor = conn.cursor()
+    cursor.execute(query)
+    data = cursor.fetchall()
+
+    col = ['ticker','nb_shares']  # defining the column name
+    df = pd.DataFrame(data, columns=col)
+    
+    values=[]
+    for index, row in df.iterrows():
+        prices = getStockPrice(row['ticker'])
+        #get the last close price
+        price = prices.iloc[-1]['Close']
+        values.append(row['nb_shares']*price)
+
+    df['current_value'] = values
+    return df
 
