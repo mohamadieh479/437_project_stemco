@@ -1,6 +1,6 @@
 from asyncio.windows_events import NULL
 from sysconfig import get_path_names
-from DataBaseTools import UserTableTools
+from DataBaseTools import UserTableTools,UserPortfolioTools
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import g,redirect,url_for,flash
 import functools
@@ -36,7 +36,10 @@ class User():
             flash("email already exists","error")
             return  False
         UserTableTools.add_user(firstname,lastname,username,email,generate_password_hash(password))
-        return this.login(username,password)
+        response = this.login(username,password)
+        if(response):
+            UserPortfolioTools.init_cash(this.get_id)
+        return response
         
 
 

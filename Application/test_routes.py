@@ -9,6 +9,7 @@ from FigureGenerator.Traces.BarTrace import BarTrace
 from FigureGenerator.Traces.LineTrace import LineTrace
 from FigureGenerator.Traces.ScatterLineTrace import ScatterLineTrace
 from FigureGenerator.Traces.CandleStickTrace import CandleStickTrace
+from FigureGenerator.Traces.PieTrace import  PieTrace
 
 from flask import render_template, request
 
@@ -74,11 +75,21 @@ def testing_figures():
 
     fig3.add_trace(candleTrace)
 
+    fig4 = Figure()
+    
+    Pie = PieTrace()
+    Pie.add_values([10,5,6,23])
+    Pie.add_labels(['ads','sfd','sfhgf','qwe','zcx'])
+    Pie.set_info( label=True,percent=True,value=True)
+
+    fig4.add_trace(Pie)
+
     return render_template("test_templates/testing_figures.html",
                            title="hello",
                            figure1=fig1.render(),
                            figure2=fig2.render(),
-                           figure3=fig3.render()
+                           figure3=fig3.render(),
+                           figure4=fig4.render()
                            )
 
 

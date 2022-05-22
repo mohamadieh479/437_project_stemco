@@ -1,5 +1,5 @@
 import psycopg2
-from getStockPrice import getStockPrice
+from DataBaseTools.getStockPrice import getStockPrice
 import pandas as pd
 
 
