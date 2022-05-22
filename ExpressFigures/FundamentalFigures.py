@@ -75,7 +75,7 @@ def genWorkingCapitalRatioFigure(ticker):
 
 def genROEFigure(ticker):
     fig = Figure()
-    fig.set_Title(str(ticker)+" Rate of exchange")
+    fig.set_Title(str(ticker)+" Return on Equity")
     fig.set_xLabel("Date")
 
     df = ROE(ticker)
@@ -83,7 +83,7 @@ def genROEFigure(ticker):
     trace.add_X_values(df["Date"])
     trace.add_Y_values(df["ROE"])
     trace.set_color("darksalmon")
-    trace.set_name(str(ticker)+" Rate of exchange")
+    trace.set_name(str(ticker)+" Return on Equity")
 
     fig.add_trace(trace)
 

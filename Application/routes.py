@@ -113,14 +113,14 @@ def candleStickChart():
     fund_figure2 = genPEFigure(name).render() if 'PE' in fund else ''
     fund_figure3 = genQuickRatioFigure(name).render() if 'QRF' in fund else ''
     fund_figure4 = genWorkingCapitalRatioFigure(
-        name).render() if 'WCRF' in fund else ''
+        name).render() if 'WCR' in fund else ''
     fund_figure5 = genROEFigure(name).render() if 'ROE' in fund else ''
 
     return render_template("figures.html",
                            title="%s stock data" % (name),
                            figure1=fig.render(),
                            figure2=fig2.render(),
-                           figure3='',
+                           figure3=fig3,
                            fund_figure1=fund_figure1,
                            fund_figure2=fund_figure2,
                            fund_figure3=fund_figure3,
