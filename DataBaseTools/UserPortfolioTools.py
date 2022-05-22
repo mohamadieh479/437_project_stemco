@@ -1,6 +1,36 @@
 import psycopg2
 from getStockPrice import getStockPrice
 
+#this function will initialize the cash of new users to 0
+def init_cash(username,password):
+    conn = psycopg2.connect(
+        database="STEM", user='postgres',
+        password='admin', host='localhost', port='5432')
+    
+    query = "select id from users where username = '{}' and password='{}'".format(username,password)
+    cursor = conn.cursor()
+    cursor.execute(query)
+    id = cursor.fetchall()[0][0]
+    
+    query="insert into usercash values({},0)".format(id)
+    cursor = conn.cursor()
+    cursor.execute(query)
+    conn.commit()
+
+
+#this function updates the cash of the new users
+def set_cash(userID,cash):
+    conn = psycopg2.connect(
+        database="STEM", user='postgres',
+        password='admin', host='localhost', port='5432')
+
+    query = "update usercash set cash ={} where user_id = {}".format(cash,userID)
+    cursor = conn.cursor()
+    cursor.execute(query)
+    conn.commit()
+
+
+#this function will add a number of stocks of a given company to a users portfolio. It will raise an exception if the cash of the user isn't enough
 def buy_stock(userId,ticker,quantity):
     conn = psycopg2.connect(
         database="STEM", user='postgres',
@@ -14,8 +44,7 @@ def buy_stock(userId,ticker,quantity):
     df = getStockPrice(ticker)
     #get the last close price
     price = df.iloc[-1]['Close']
-    #get the last date
-    date = df.iloc[-1]['Date']
+    
     
     if (cash< price*quantity):
         raise Exception("Not Enough Cash")
@@ -25,20 +54,68 @@ def buy_stock(userId,ticker,quantity):
     cursor.execute(query)
     conn.commit()
 
-    query = "select count(*) from userportfolio where user_id ='{}' and ticker = '{}' and buy_date = '{}'".format(userId,ticker,date)
+    query = "select count(*) from userportfolio where user_id ='{}' and ticker = '{}'".format(userId,ticker)
     cursor = conn.cursor()
     cursor.execute(query)
     count = cursor.fetchall()[0][0]
     if (count == 0):
-        query = "Insert into userportfolio (user_id,ticker,buy_date,nb_shares) values ('{}','{}','{}','{}')".format(userId,ticker,date,quantity)
+        query = "Insert into userportfolio (user_id,ticker,nb_shares) values ('{}','{}','{}')".format(userId,ticker,quantity)
         cursor = conn.cursor()
         cursor.execute(query)
         conn.commit()
     
     else:
-        query = "Update userportfolio set nb_shares = nb_shares +{} where user_id ='{}' and ticker = '{}' and buy_date = '{}' ".format(quantity,userId,ticker,date)
+        query = "Update userportfolio set nb_shares = nb_shares +{} where user_id ='{}' and ticker = '{}' ".format(quantity,userId,ticker)
         cursor = conn.cursor()
         cursor.execute(query)
         conn.commit()
 
-buy_stock(1,'MMM',5)
+
+#this function will sell a number of stocks of a given company from a users portfolio. It will raise an exception if the quanitity sold 
+#is more than the ones the user has(or if he doesn't own any).
+def sell_stock(userId,ticker,quantity):
+    conn = psycopg2.connect(
+        database="STEM", user='postgres',
+        password='admin', host='localhost', port='5432')
+
+    df = getStockPrice(ticker)
+    #get the last close price
+    price = df.iloc[-1]['Close']
+
+    query = "select count(*) from userportfolio where user_id ='{}' and ticker = '{}'".format(userId,ticker)
+    cursor = conn.cursor()
+    cursor.execute(query)
+    count = cursor.fetchall()[0][0]
+
+    if count==0:
+        raise Exception("User doesn't have that stock")
+
+    query = "select nb_shares from userportfolio where user_id ='{}' and ticker = '{}'".format(userId,ticker)
+    cursor = conn.cursor()
+    cursor.execute(query)
+    nb_shares = cursor.fetchall()[0][0]
+    if nb_shares<quantity:
+        raise Exception("User doesn't have that quantity of shares")
+
+    elif nb_shares==quantity:
+        query="delete from userportfolio where user_id ='{}' and ticker = '{}'".format(userId,ticker)
+        cursor = conn.cursor()
+        cursor.execute(query)
+        conn.commit()
+
+        query = "Update usercash set cash = cash + "+str(price*quantity)+" where user_id = "+str(userId)
+        cursor = conn.cursor()
+        cursor.execute(query)
+        conn.commit()
+    
+    else:
+        query = "Update userportfolio set nb_shares = nb_shares -{} where user_id ='{}' and ticker = '{}' ".format(quantity,userId,ticker)
+        cursor = conn.cursor()
+        cursor.execute(query)
+        conn.commit()
+
+        query = "Update usercash set cash = cash + "+str(price*quantity)+" where user_id = "+str(userId)
+        cursor = conn.cursor()
+        cursor.execute(query)
+        conn.commit()
+

@@ -1,5 +1,5 @@
 import psycopg2
-
+from UserPortfolioTools import init_cash
 def add_user(firstname,lastname,username,email,password):
     conn = psycopg2.connect(
             database="STEM",user = 'postgres',
@@ -12,6 +12,9 @@ def add_user(firstname,lastname,username,email,password):
     cursor.close()
 
     conn.close()
+    
+    init_cash(username,password)
+
 
 def fetch_user_ID(id):
     #TODO: error handling

@@ -8,9 +8,8 @@ def createUserPortfolioTable():
     query = """Create table if not exists userportfolio(
         user_id SERIAL not NULL,
         ticker varchar(5) NOT NULL,
-        buy_date varchar(20) NOT NULL,
         nb_shares int NOT NULL,
-        primary key(user_id,ticker,buy_date),
+        primary key(user_id,ticker),
         foreign key(user_id) references users
 		on delete cascade,
         foreign key(ticker) references company
