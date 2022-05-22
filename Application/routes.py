@@ -1,5 +1,6 @@
 from ExpressFigures.FundamentalFigures import *
 from DataBaseTools.getStockPrice import getStockPrice
+from DataBaseTools import UserTableTools, UserPortfolioTools
 from Application import app
 from flask import render_template, request, session, g, redirect, url_for, flash
 from User import User, login_required
@@ -15,10 +16,12 @@ from DataBaseTools.getCompanies import getCompanies
 from Analysis import technicalAn
 
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 # @login_required    #by uncommenting this,you can force user to sign in to access this page
 def index():
     select = getCompanies()
+    if request.method == 'POST':
+        UserPortfolioTools.set_cash(request.form['id'], request.form['cash'])
     return render_template("index.html", options1=select)
 
 
@@ -174,6 +177,11 @@ def register():
             return redirect(url_for('index'))
 
     return render_template("register.html")
+
+
+@app.route('/user')
+def portfolio():
+    return render_template("portfolio.html")
 
 # this means this function will run before all other route functions( suppose you open index page, this runs then the index function runs)
 

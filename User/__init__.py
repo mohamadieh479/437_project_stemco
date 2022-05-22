@@ -53,7 +53,7 @@ class User():
 
         return this.__data[3]
 
-    def get_firsname(this):
+    def get_firstname(this):
         assert this.__data != NULL, "User object corresponds to no existing user"
 
         return this.__data[1]

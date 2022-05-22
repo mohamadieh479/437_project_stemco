@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@500&family=Roboto:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@100;300;400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'League Spartan';
+
+}
+
+h1{
+    padding-top: 20px;
+    text-align: center;
+    font-family: 'Jost';
+    font-size:42px;
+}
+
+h1 .name{
+    color:#8468f5;
+}
+
+/*
+h1::after{
+    content: '';
+    width: 30%;
+    height: 8px;
+    background: linear-gradient(250.46deg, #8468F5 72.09%, #EC74E7 352.57%);
+    mix-blend-mode: normal;
+    opacity: 0.31;
+    border-radius: 4px;
+    display: block;
+    margin-left: 50%;
+}*/
