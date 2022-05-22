@@ -21,6 +21,7 @@ def genEPSFigure(ticker):
 
     return fig
 
+
 def genPEFigure(ticker):
     fig = Figure()
     fig.set_Title(str(ticker)+" Price / EPS")
@@ -36,6 +37,7 @@ def genPEFigure(ticker):
     fig.add_trace(trace)
 
     return fig
+
 
 def genQuickRatioFigure(ticker):
     fig = Figure()
@@ -53,6 +55,7 @@ def genQuickRatioFigure(ticker):
 
     return fig
 
+
 def genWorkingCapitalRatioFigure(ticker):
     fig = Figure()
     fig.set_Title(str(ticker)+" WorkingCapitalRatio")
@@ -69,6 +72,7 @@ def genWorkingCapitalRatioFigure(ticker):
 
     return fig
 
+
 def genROEFigure(ticker):
     fig = Figure()
     fig.set_Title(str(ticker)+" Rate of exchange")
@@ -84,6 +88,7 @@ def genROEFigure(ticker):
     fig.add_trace(trace)
 
     return fig
+
 
 def genVolumeFigure(ticker):
     fig = Figure()

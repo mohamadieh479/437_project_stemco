@@ -1,3 +1,4 @@
+from ExpressFigures.FundamentalFigures import *
 from DataBaseTools.getStockPrice import getStockPrice
 from Application import app
 from flask import render_template, request, session, g, redirect, url_for, flash
@@ -9,6 +10,7 @@ from FigureGenerator.Traces.BarTrace import BarTrace
 from FigureGenerator.Traces.LineTrace import LineTrace
 from FigureGenerator.Traces.ScatterLineTrace import ScatterLineTrace
 from FigureGenerator.Traces.CandleStickTrace import CandleStickTrace
+
 from DataBaseTools.getCompanies import getCompanies
 from Analysis import technicalAn
 
@@ -105,11 +107,25 @@ def candleStickChart():
     if not isinstance(fig3, list):
         fig3 = fig3.render()
 
+    # Fundamental Analysis begins here
+    fund = request.args.getlist('fund')
+    fund_figure1 = genEPSFigure(name).render() if 'EPS' in fund else ''
+    fund_figure2 = genPEFigure(name).render() if 'PE' in fund else ''
+    fund_figure3 = genQuickRatioFigure(name).render() if 'QRF' in fund else ''
+    fund_figure4 = genWorkingCapitalRatioFigure(
+        name).render() if 'WCRF' in fund else ''
+    fund_figure5 = genROEFigure(name).render() if 'ROE' in fund else ''
+
     return render_template("figures.html",
                            title="%s stock data" % (name),
                            figure1=fig.render(),
                            figure2=fig2.render(),
-                           figure3=fig3,
+                           figure3='',
+                           fund_figure1=fund_figure1,
+                           fund_figure2=fund_figure2,
+                           fund_figure3=fund_figure3,
+                           fund_figure4=fund_figure4,
+                           fund_figure5=fund_figure5,
                            company=name,
                            options1=select
                            )

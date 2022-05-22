@@ -23,14 +23,11 @@
     <h1 class = 'company'>{{company}}</h1>
 <br>
     <div class = 'wrapper'>
-        <p>Below is an accurate depiction of {{company}}'s stock price fluctuation. For more insights on {{company}}'s performance, select one type of analysis to run:
+        <p>Below is an accurate depiction of {{company}}'s stock price fluctuation. For more insights on {{company}}'s performance, select a set of filters <br> to run technical and fundamental analysis.
         </p>
             <br> 
         <div class = 'buttons'>
-            <button id = 'pop' onclick = "openPopup()"> Technical </button>
-            <form action = '/testing_ExpressFigures'>
-                <button> Fundamental </button>  
-            </form>
+            <button id = 'pop' onclick = "openPopup()"> Run Analysis </button>
         </div> 
     </div>
     <form class = 'clear' action ="/candleStickChart">
@@ -41,41 +38,80 @@
         {{ figure1 }}
         {{ figure3 }}
         {{ figure2 }}
+        {% if request.args.get('fund') %}<h1> Fundamental Analysis </h1> {% endif %}
+        {{ fund_figure1 }}
+        {{ fund_figure2 }}
+        {{ fund_figure3 }}
+        {{ fund_figure4 }}
+        {{ fund_figure5 }}
+
     </div>
 
     <div class = 'popup' id = 'popup'>
-        <h1>Technical Analysis</h1>
-        <p> In order to run technical analysis, select at least one indicator:</p>
+        <span onclick = 'closePopup()'>X Close </span>
+
         <form action = "/candleStickChart" class = 'indicators'>
             <input type="hidden" name="company" value={{company}} />
-            <div class = 'indicators-list'>
-                <div class = 'item'> 
-                    <input type="checkbox" id="Bollinger Bands" name="indicators" value="BB">
-                    <label for="bollinger"> Bollinger Bands </label><br>
+            <div class = 'analysis-flex'>
+                <div class ='popup-flex-item'>
+                    <h1>Technical Analysis</h1>
+                    <p> Select at least one indicator:</p>
+                    <div class = 'indicators-list'>
+                        <div class = 'item'> 
+                            <input type="checkbox" id="Bollinger Bands" name="indicators" value="BB">
+                            <label for="bollinger"> Bollinger Bands </label><br>
+                        </div>
+                        <div class = 'item'>
+                            <input type="checkbox" id="RSI" name="indicators" value="RSI">
+                            <label for="RSI"> RSI </label><br>
+                        </div>
+                        <div class = 'item'>
+                            <input type="checkbox" id="MA" name="indicators" value="MA" onclick="appear('MA','window')">
+                            <label for="ma"> Moving Average </label><br>
+                            <input type = 'number' id ='window' name ='indicators_ma' min="2">
+                        </div>
+                        <div class ='item'>
+                            <input type="checkbox" id="EMA" name="indicators" value="EMA" onclick="appear('EMA','ewindow')">
+                            <label for="ema"> Exponential Moving Average </label><br>
+                            <input type = 'number' id ='ewindow' name ='indicators_ema' min="2">
+                        </div>
+                        <div class ='item'>
+                            <input type="checkbox" id="ATR" name="indicators" value="ATR">
+                            <label for="atr"> Average True Range </label><br>
+                        </div>
+                    </div>
                 </div>
-                <div class = 'item'>
-                    <input type="checkbox" id="RSI" name="indicators" value="RSI">
-                    <label for="RSI"> RSI </label><br>
-                </div>
-                <div class = 'item'>
-                    <input type="checkbox" id="MA" name="indicators" value="MA" onclick="appear('MA','window')">
-                    <label for="ma"> Moving Average </label><br>
-                    <input type = 'number' id ='window' name ='indicators_ma' min="2">
-                </div>
-                <div class ='item'>
-                    <input type="checkbox" id="EMA" name="indicators" value="EMA" onclick="appear('EMA','ewindow')">
-                    <label for="ema"> Exponential Moving Average </label><br>
-                    <input type = 'number' id ='ewindow' name ='indicators_ema' min="2">
-                </div>
-                <div class ='item'>
-                    <input type="checkbox" id="ATR" name="indicators" value="ATR">
-                    <label for="atr"> Average True Range </label><br>
+                <div class = 'vl'></div>
+                <div class = 'popup-flex-item'>
+                    <h1>Fundamental Analysis</h1>
+                    <p> Select at least one tool:</p>
+                    <div class = 'indicators-list'>
+                        <div class = 'item'>
+                            <input type="checkbox" id="EPS" name="fund" value="EPS">
+                            <label for="EPS"> Earnings Per Share (EPS) </label><br>
+                        </div>
+                        <div class = 'item'> 
+                            <input type="checkbox" id="PE" name="fund" value="PE">
+                            <label for="PE"> Price-to-Earnings Ratio (P/E) </label><br>
+                        </div>
+                        <div class = 'item'> 
+                            <input type="checkbox" id="QRF" name="fund" value="QRF">
+                            <label for="QRF"> Quick Ratio Figure </label><br>
+                        </div>
+                        <div class = 'item'> 
+                            <input type="checkbox" id="WCR" name="fund" value="WCR">
+                            <label for="WCR"> Working Capital Ratio  </label><br>
+                        </div>
+                        <div class = 'item'> 
+                            <input type="checkbox" id="ROE" name="fund" value="ROE">
+                            <label for="ROE"> Return on Equity  </label><br>
+                        </div>
+                    </div>
                 </div>
             </div>
             <input type = 'submit' name = '' value ='Submit' class ='bttn' onclick = 'closePopup()'>
         </form>
         <br>
-        <span onclick = 'closePopup()'>X Close </span>
     </div>
     <script>
         let popup = document.getElementById('popup');

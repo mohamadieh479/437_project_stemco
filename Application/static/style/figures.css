@@ -105,7 +105,7 @@ nav button{
 
 .popup{
     visibility: hidden;
-    width: 400px;
+    width: 800px;
     background: #fff;
     border-radius: 6px;
     position: absolute;
@@ -170,4 +170,26 @@ nav button{
     border: none;
     cursor: pointer;
     padding: 10px 40px;
+}
+
+.analysis-flex{
+    display: flex;
+    gap: 40px;
+
+}
+
+.vl{
+    margin-top: 3%;
+    height: 280px;
+    margin-bottom: 3%;
+    border-left: 6px solid #8468F5;
+    mix-blend-mode: normal;
+    opacity: 0.31;
+    border-radius: 60px;
+}
+
+.popup span{
+    position: absolute;
+    margin-left: -420px;
+    margin-top: 10px;   
 }
