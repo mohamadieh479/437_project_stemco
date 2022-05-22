@@ -1,47 +1,47 @@
 from asyncio.windows_events import NULL
 from sysconfig import get_path_names
-from DataBaseTools import UserTableTools,UserPortfolioTools
+from DataBaseTools import UserTableTools, UserPortfolioTools
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask import g,redirect,url_for,flash
+from flask import g, redirect, url_for, flash
 import functools
+
 
 class User():
     def __init__(this):
         this.__data = NULL
 
-    def load_user_id(this,id):
+    def load_user_id(this, id):
         this.__data = UserTableTools.fetch_user_ID(id)
         if(this.__data is None):
             this.__data = NULL
             return False
         return True
 
-    def login(this,username,password):
-        
+    def login(this, username, password):
+
         data = UserTableTools.fetch_user_USERNAME(username)
 
         if(data is None or not check_password_hash(data[5], password)):
             return False
-        
+
         this.__data = data
 
         return True
 
-    def register(this,firstname,lastname,username,email,password):
+    def register(this, firstname, lastname, username, email, password):
 
         if(UserTableTools.fetch_user_USERNAME(username) is not None):
-            flash("username already exists","error")
+            flash("username already exists", "error")
             return False
         if(UserTableTools.check_user_email_exists(email)):
-            flash("email already exists","error")
-            return  False
-        UserTableTools.add_user(firstname,lastname,username,email,generate_password_hash(password))
-        response = this.login(username,password)
+            flash("email already exists", "error")
+            return False
+        UserTableTools.add_user(
+            firstname, lastname, username, email, generate_password_hash(password))
+        response = this.login(username, password)
         if(response):
-            UserPortfolioTools.init_cash(this.get_id)
+            UserPortfolioTools.init_cash(this.get_id())
         return response
-        
-
 
     def get_id(this):
         assert this.__data != NULL, "User object corresponds to no existing user"
@@ -52,7 +52,7 @@ class User():
         assert this.__data != NULL, "User object corresponds to no existing user"
 
         return this.__data[3]
-        
+
     def get_firsname(this):
         assert this.__data != NULL, "User object corresponds to no existing user"
 
@@ -68,7 +68,12 @@ class User():
 
         return this.__data[4]
 
-def login_required(view): # add '@login_required' before any function (and after route) to force the user to login first
+    def get_user_cash(this):
+        return UserPortfolioTools.get_cash(this.__data[0])
+
+
+# add '@login_required' before any function (and after route) to force the user to login first
+def login_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if g.user is None:
