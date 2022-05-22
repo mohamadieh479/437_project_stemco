@@ -6,14 +6,17 @@
     </head>
     <body>
         <section class = "header">
-            <img src="{{ url_for('static', filename='assets/Ellipse 4.png') }}" class ="leftmost"/>
+            <img src="{{ url_for('static', filename='assets/Ellipse 4.png') }}" class ="leftmost" />
 
             <nav>
-                <a href = "/"><img src="{{ url_for('static', filename='assets/stemco 1.png') }}"></a>
+                <a href = "#why"><img src="{{ url_for('static', filename='assets/stemco 1.png') }}"></a>
                 <div class = "nav-links">
                     <ul>
-                        <li> <a href = ""> Stocks </a></li>
-                        <li> <a href = ""> Contact </a></li>
+                        {% if g.user %}
+                            <li> <a href ='/user'> User </a></li>
+                        {% endif %}
+                        <li> <a href = "#companies"> Stocks </a></li>
+                        <li> <a href = "#contact"> Contact </a></li>
                     </ul>
                 </div>
                 {% if g.user %}
@@ -52,7 +55,7 @@
         </section>
 
         <!-- Why Stem Co?-->
-        <section class = "why">
+        <section class = "why" id = 'why'>
             <p class = "whystemco">Why Stem Co?</p>
             <p class="first"> Our guiding principle is to help users make sound and <br>informed decisions. Explore key features of our product <br> and never regret an investment again!</p>
             <div class="row">
@@ -68,15 +71,15 @@
                 </div>
                 <div class = "whycol">
                     <img src="{{ url_for('static', filename='assets/Other 02.png') }}"/>
-                    <h3>Comunity</h3>
-                    <p>Engage with an interactive community and discuss the latest updates</p>
+                    <h3>Portfolio</h3>
+                    <p>Build your own portfolio and receieve personalized reports </p>
                 </div>
             </div>
             <img src="{{ url_for('static', filename='assets/Ellipse 2.png') }}" class ="bottomellipse"/>
             <img src="{{ url_for('static', filename='assets/Lines.png') }}" class = "line"/>
             <img src ="{{ url_for('static', filename='assets/Right Graphic2.png') }}" class ="rg2"/>
         </section>
-        <section class = "companies">
+        <section class = "companies" id = 'companies'>
             <p class = "ourcompanies">Our Companies</p>
             <p class ="txt">The stocks our platform offers encompass all companies<br> enlisted in the Dow Jones Index. Get started and select a <br>company of your choice.</p>
             <div id = container>
@@ -98,7 +101,7 @@
             
         </section>
         <hr>
-        <section class = "contact">
+        <section class = "contact" id = 'contact'>
             <h1> Get in touch!</h1>
             <p id = "firstp">Any question, feedback, or remark? Do not <br> hesitate to contact us!</p>
             <div id = "row">
