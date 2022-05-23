@@ -64,6 +64,15 @@ button:hover{
     cursor: pointer;
 }
 
+.buttons input{
+    width: 192px;
+    height: 53px;
+    font-size: 20px;
+    border-radius: 30px;
+    text-align: center;
+    background: #fafafa;  
+}
+
 nav{
     padding-left: 30px;
     padding-top: 20px;

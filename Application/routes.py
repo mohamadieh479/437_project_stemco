@@ -13,7 +13,7 @@ from FigureGenerator.Traces.ScatterLineTrace import ScatterLineTrace
 from FigureGenerator.Traces.CandleStickTrace import CandleStickTrace
 
 from DataBaseTools.getCompanies import getCompanies
-from Analysis import technicalAn
+from Analysis import technicalAn, valueAtRisk, recommendation
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -27,6 +27,13 @@ def index():
 
 @app.route("/candleStickChart", methods=['GET', 'POST'])
 def candleStickChart():
+    # Buy Function
+    if request.method == 'POST':
+        id = request.form['id']
+        name = request.form['company']
+        cash = request.form['cash']
+        UserPortfolioTools.buy_stock(id, name, int(cash))
+        return redirect('/candleStickChart?company='+name)
     select = getCompanies()
     name = request.args.get('company')
     indicators = request.args.getlist('indicators')
@@ -181,7 +188,17 @@ def register():
 
 @app.route('/user')
 def portfolio():
-    return render_template("portfolio.html")
+    id = g.user.get_id()
+    df = valueAtRisk.view_portfolio(id)
+    recommend = recommendation.recommendation_portfolio(id)
+    decrease_var = valueAtRisk.decrease_VaR_Portfolio(id)
+    return render_template("portfolio.html",
+                           decision='lose',
+                           recommendation=recommend,
+                           price=round(valueAtRisk.VaR_Portfolio(
+                               id), 2),
+                           pie=UserPortfolioTools.portfolio_chart(df).render(),
+                           var=decrease_var)
 
 # this means this function will run before all other route functions( suppose you open index page, this runs then the index function runs)
 

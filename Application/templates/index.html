@@ -37,17 +37,20 @@
                 </div>
                 {% endif %}
             </nav>
-            <div class ='popup' id='popup'>
-                <span onclick = 'closePopup()'>X Close </span>
-                <h2>Update Cash</h2>
-                <form action = '/' method = 'POST' class = 'update-cash'>
-                    <label for="cash"> Cash Value </label>
-                    <input type = 'hidden' name ='id' value = {{ g.user.get_id() }}>
-                    <input type = 'number' id ='cash_value' name ='cash' min="0">
-                    <br> 
-                    <input type = 'submit' name = 'Done' class ='button'/>
-                </form>
-            </div>
+            {% if g.user %}
+                <div class ='popup' id='popup'>
+                    <br>
+                    <span onclick = 'closePopup()'>X Close </span>
+                    <h1>Update Cash</h1>
+                    <form action = '/' method = 'POST' class = 'update-cash'>
+                        <label for="cash" style="font-size: 18px;"> Cash Value &nbsp;&nbsp;&nbsp; </label>
+                        <input type = 'hidden' name ='id' value = {{ g.user.get_id() }}>
+                        <input type = 'number' id ='cash_value' name ='cash' min="0">
+                        <br> 
+                        <input type = 'submit' name = 'Done' class ='button'/>
+                    </form>
+                </div>
+            {% endif %}
             <img src ="{{ url_for('static', filename='assets/80.png') }}" class = "abab"/>
             <img src="{{ url_for('static', filename='assets/81.png') }}" class= "abb"/>
             <img src="{{ url_for('static', filename='assets/Ellipse 3.png') }}" class ="bottom-right"/>

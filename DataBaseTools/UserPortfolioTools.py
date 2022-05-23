@@ -1,6 +1,9 @@
 import psycopg2
 from DataBaseTools.getStockPrice import getStockPrice
 import pandas as pd
+import numpy as np
+from FigureGenerator import Figure
+from FigureGenerator.Traces.PieTrace import PieTrace
 
 
 # this function will initialize the cash of new users to 0
@@ -163,3 +166,15 @@ def view_portfolio(userId):
 
     df['current_value'] = values
     return df
+
+
+def portfolio_chart(df):
+    fig = Figure()
+
+    Pie = PieTrace()
+    Pie.add_values(df['current_value'])
+    Pie.add_labels(np.column_stack((df['ticker'], df['nb_shares'])))
+    Pie.set_info(label=True, percent=True, value=True)
+
+    fig.add_trace(Pie)
+    return fig

@@ -4,7 +4,49 @@
         <title> Portfolio</title>
         <link rel = "stylesheet" href = '../static/style/portfolio.css'>
     </head>
+    <nav>
+        <a href = '/'><button> < Back </button></a>
+    </nav>
     <body>
-        <h1><u class ='h1-underline'><span class = 'name'>{{g.user.get_firstname()}} {{g.user.get_lastname()}}</span>'s Personal Report</u></h1>
+        <h1><u class ='h1-underline'><span class = 'name'>{{g.user.get_firstname()}} {{g.user.get_lastname()}}</span>'s Portfolio </u></h1>
+        <div class ='user'>
+            <div class = 'decision'>
+                You stand to <span>{{decision}} </span> around <span>$ {{price}}</span> from your portfolio today! Press on the button <br>
+                for our recommendation on how to <span>decrease</span> your value at risk. 
+                <br> <br>
+                <button onclick = 'decrease()'>Recommendation</button>
+            </div>
+            <div class = 'recommendation'>
+                <br> We recommend you take the following steps: 
+                <ul>
+                    {% for key, value in recommendation.iterrows() %}
+                        <li> 
+                            {% if value['recommendation']=='Strong Buy' %}
+                                Strongly buy more of {{value['ticker']}} stocks. 
+                            {% elif value['recommendation'] == 'Buy' %}
+                                Buy more of {{value['ticker']}} stocks.
+                            {% elif value['recommendation'] == 'Neutral' %}
+                                Neutral decision for {{value['ticker']}} stocks.
+                            {% elif value['recommendation'] == 'Sell' %}
+                                Sell some of your {{value['ticker']}} stocks.
+                            {% elif value['recommendation'] == 'Strong Sell' %}
+                                Sell your shares of {{value['ticker']}} stocks.
+                            {% else %}
+                                No recommendation...
+                            {% endif %}
+
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <br><br>
+            Find below all the stocks at your disposal along with the number of shares owned and the total current value.
+            {{pie}}
+        </div>
+        <script>
+            function decrease() {
+              alert("We recommend that you sell some shares of {{var}} to decrease your value at risk.");
+            }
+        </script>                
     </body>
 </html>

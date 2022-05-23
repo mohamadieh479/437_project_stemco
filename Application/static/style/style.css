@@ -565,5 +565,31 @@ hr{
 }
 
 .button{
-    margin-top: 10px;
+    margin-top: 20px;
+    background: linear-gradient(87.86deg, #EC74E7 -45.12%, #8468F5 74.37%);
+    color: #fff;
+    padding: 10px 30px;
+    border: 0px; 
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.button:hover{
+    background: #8468f5;
+    font-weight: 700;
+}
+.popup span{
+    position: relative;
+    margin-left: -350px;
+    margin-top: 20px;
+}
+
+.popup span:hover{
+    color: red;
+}
+
+#cash_value{
+    border-radius: 30px;
+    padding: 5px;
 }

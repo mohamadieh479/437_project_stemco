@@ -27,7 +27,13 @@
         </p>
             <br> 
         <div class = 'buttons'>
-            <button id = 'pop' onclick = "openPopup()"> Run Analysis </button>
+            <button id = 'pop' class='run' onclick = "openPopup()"> Run Analysis </button>
+            <form action = '/candleStickChart' method = 'POST'>
+                <button id = 'pop' class ='buy' type ='submit' >  Buy </button>
+                <input type = 'number' name = 'cash' min = 0 required>
+                <input type="hidden" name ="id" value ={{g.user.get_id()}}>
+                <input type="hidden" name ="company" value ={{company}}>
+            </form>
         </div> 
     </div>
     <form class = 'clear' action ="/candleStickChart">
