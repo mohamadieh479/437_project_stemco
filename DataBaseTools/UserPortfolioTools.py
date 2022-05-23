@@ -108,16 +108,15 @@ def sell_stock(userId, ticker, quantity):
     cursor = conn.cursor()
     cursor.execute(query)
     count = cursor.fetchall()[0][0]
-
-    if count == 0:
-        raise Exception("User doesn't have that stock")
-
-    query = "select nb_shares from userportfolio where user_id ='{}' and ticker = '{}'".format(
-        userId, ticker)
-    cursor = conn.cursor()
-    cursor.execute(query)
-    nb_shares = cursor.fetchall()[0][0]
     try:
+        if count == 0:
+            raise Exception("User doesn't have that stock")
+
+        query = "select nb_shares from userportfolio where user_id ='{}' and ticker = '{}'".format(
+            userId, ticker)
+        cursor = conn.cursor()
+        cursor.execute(query)
+        nb_shares = cursor.fetchall()[0][0]
         if nb_shares < quantity:
             raise Exception("User doesn't have that quantity of shares")
 
