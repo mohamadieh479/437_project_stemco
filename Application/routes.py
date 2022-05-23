@@ -192,8 +192,8 @@ def register():
 
     return render_template("register.html")
 
-
 @app.route('/user')
+@login_required
 def portfolio():
     id = g.user.get_id()
     df = valueAtRisk.view_portfolio(id)
