@@ -213,9 +213,11 @@ def portfolio():
 
 # this means this function will run before all other route functions( suppose you open index page, this runs then the index function runs)
 
+from DataBaseTools import updatePriceTable
 
 @app.before_request
 def load_logged_in_user():
+    updatePriceTable.updatePrices()
     user_id = session.get('user_id')
 
     if user_id is None:
@@ -223,3 +225,6 @@ def load_logged_in_user():
     else:
         g.user = User()
         g.user.load_user_id(user_id)
+
+
+    

@@ -16,22 +16,32 @@ def updatePrices():
 
         cursor=conn.cursor()
         cursor.execute(query)
-        date = cursor.fetchone()[0]
+        try:
+                date = cursor.fetchone()[0]
+        except Exception:
+                date = "2017-09-01"
 
-        #deleting the date to not have duplicate entries in database while inserting the new data
-        query = "delete from price where date = '"+date+"'"
-        cursor.execute(query)
-        conn.commit()
-        cursor.close()
-
+        
         #extracting the year,month,day from date string
         year =int( date[0:4])
         month = int(date[5:7])
         day  = int(date[8:])
 
         #setting the start and end dates that will be extracted from the api
-        start = dt.datetime(year,month,day)
+        start = dt.datetime(year=year,month=month,day=day)
         end = dt.datetime.now()
+        delt=end-start
+        if(delt<dt.timedelta(days=7)):
+                conn.close()
+                return None
+        print("updating db, please wait a bit")
+        #deleting the date to not have duplicate entries in database while inserting the new data
+        query = "delete from price where date = '"+date+"'"
+        cursor.execute(query)
+        conn.commit()
+        cursor.close()
+
+
 
 
         #inserting the new values into the database
@@ -53,6 +63,7 @@ def updatePrices():
                 try:    
                         #inserting the data in the database. each entry corresponds to a date
                         for i in range(len(data)-1):#the last element is not part of the needed data
+                                print('-',end='')
                                 cursor=conn.cursor()
                                 s = str(data['Date'][i])[0:10]
                                 volume = str(data['Volume'][i])
@@ -60,6 +71,7 @@ def updatePrices():
                                 conn.commit()
                 except Exception as e:
                         print(e)
+        print()
 
         conn.close()
 
