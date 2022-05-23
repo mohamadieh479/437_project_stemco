@@ -1,3 +1,4 @@
+from DataBaseTools import updatePriceTable
 from ExpressFigures.FundamentalFigures import *
 from DataBaseTools.getStockPrice import getStockPrice
 from DataBaseTools import UserTableTools, UserPortfolioTools
@@ -132,6 +133,10 @@ def candleStickChart():
         name).render() if 'WCR' in fund else ''
     fund_figure5 = genROEFigure(name).render() if 'ROE' in fund else ''
 
+    df = getStockPrice(name)
+    # get the last close price
+    price = round(df.iloc[-1]['Close'], 2)
+
     return render_template("figures.html",
                            title="%s stock data" % (name),
                            figure1=fig.render(),
@@ -144,7 +149,8 @@ def candleStickChart():
                            fund_figure5=fund_figure5,
                            company=name,
                            options1=select,
-                           nb_shares=nb_shares
+                           nb_shares=nb_shares,
+                           price=price
                            )
 
 
@@ -192,6 +198,7 @@ def register():
 
     return render_template("register.html")
 
+
 @app.route('/user')
 @login_required
 def portfolio():
@@ -213,7 +220,6 @@ def portfolio():
 
 # this means this function will run before all other route functions( suppose you open index page, this runs then the index function runs)
 
-from DataBaseTools import updatePriceTable
 
 @app.before_request
 def load_logged_in_user():
@@ -225,6 +231,3 @@ def load_logged_in_user():
     else:
         g.user = User()
         g.user.load_user_id(user_id)
-
-
-    
