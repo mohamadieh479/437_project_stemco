@@ -11,26 +11,28 @@
         <h1><u class ='h1-underline'><span class = 'name'>{{g.user.get_firstname()}} {{g.user.get_lastname()}}</span>'s Portfolio </u></h1>
         <div class ='user'>
             <div class = 'decision'>
-                You stand to <span>{{decision}} </span> around <span>$ {{price}}</span> from your portfolio today! Press on the button <br>
+                Your entire portfolio is worth <span>$ {{worth}}</span>.
+                <br> <br>
+                You stand to <span>{{decision}} </span> around <span>{{percent}} % ($ {{price}})</span> of your portfolio today! Press on the button <br>
                 for our recommendation on how to <span>decrease</span> your value at risk. 
                 <br> <br>
                 <button onclick = 'decrease()'>Recommendation</button>
             </div>
             <div class = 'recommendation'>
-                <br> We recommend you take the following steps: 
+                <br> <b>We recommend you take the following steps: </b> 
                 <ul>
                     {% for key, value in recommendation.iterrows() %}
                         <li> 
                             {% if value['recommendation']=='Strong Buy' %}
-                                Strongly buy more of {{value['ticker']}} stocks. 
+                                Strongly buy more  <span>{{value['ticker']}}</span> stocks. 
                             {% elif value['recommendation'] == 'Buy' %}
-                                Buy more of {{value['ticker']}} stocks.
+                                Buy more  <span>{{value['ticker']}}</span> stocks.
                             {% elif value['recommendation'] == 'Neutral' %}
-                                Neutral decision for {{value['ticker']}} stocks.
+                                Neutral decision for <span>{{value['ticker']}}</span> stocks.
                             {% elif value['recommendation'] == 'Sell' %}
-                                Sell some of your {{value['ticker']}} stocks.
+                                Sell some of your <span>{{value['ticker']}}</span> stocks.
                             {% elif value['recommendation'] == 'Strong Sell' %}
-                                Sell your shares of {{value['ticker']}} stocks.
+                                Sell your shares of <span>{{value['ticker']}}</span> stocks.
                             {% else %}
                                 No recommendation...
                             {% endif %}

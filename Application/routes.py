@@ -194,6 +194,8 @@ def portfolio():
     decrease_var = valueAtRisk.decrease_VaR_Portfolio(id)
     return render_template("portfolio.html",
                            decision='lose',
+                           worth=valueAtRisk.var_percent(id)[0],
+                           percent=valueAtRisk.var_percent(id)[1],
                            recommendation=recommend,
                            price=round(valueAtRisk.VaR_Portfolio(
                                id), 2),

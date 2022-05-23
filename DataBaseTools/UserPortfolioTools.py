@@ -165,7 +165,10 @@ def view_portfolio(userId):
         values.append(row['nb_shares']*price)
 
     df['current_value'] = values
-    return df
+    df['current_value'] = df['current_value'].round(3)
+    return (df)
+
+# this function returns a pie chart of the dataframe
 
 
 def portfolio_chart(df):

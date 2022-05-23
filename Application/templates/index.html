@@ -12,9 +12,7 @@
                 <a href = "#why"><img src="{{ url_for('static', filename='assets/stemco 1.png') }}"></a>
                 <div class = "nav-links">
                     <ul>
-                        {% if g.user %}
-                            <li> <a href ='/user'> User </a></li>
-                        {% endif %}
+                        
                         <li> <a href = "#companies"> Stocks </a></li>
                         <li> <a href = "#contact"> Contact </a></li>
                     </ul>
@@ -22,7 +20,7 @@
                 {% if g.user %}
                 <div class = "sign-in">
                     <ul>
-                        <li> <h1> {{ g.user.get_username() }} </h1></li>
+                        <li> <a href = '/user'><h1> {{ g.user.get_username() }} </h1></a></li>
                         <li onclick='openPopup()'' style="cursor: pointer"> $ {{ g.user.get_user_cash() }}</li>
                         <li><h1><a href = "/logout">Log out</a></h1>
                         </li>
