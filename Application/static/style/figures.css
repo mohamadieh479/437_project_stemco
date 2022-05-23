@@ -202,3 +202,24 @@ nav button{
     margin-left: -420px;
     margin-top: 10px;   
 }
+
+.sell{
+    padding: 20px 90px;
+    font-size: 20px;
+}
+
+.sell button, .sell input{
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: 0px;
+}
+
+.sell input{
+    background: #fafafa;
+    border: 1px solid grey;
+}
+
+.flash{
+    color:red;
+    font-size:18px;
+}

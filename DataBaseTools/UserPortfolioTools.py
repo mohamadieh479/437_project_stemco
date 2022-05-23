@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 from FigureGenerator import Figure
 from FigureGenerator.Traces.PieTrace import PieTrace
+from flask import flash
 
 
 # this function will initialize the cash of new users to 0
@@ -60,32 +61,36 @@ def buy_stock(userId, ticker, quantity):
     # get the last close price
     price = df.iloc[-1]['Close']
 
-    if (cash < price*quantity):
-        raise Exception("Not Enough Cash")
-
-    query = "Update usercash set cash = cash - " + \
-        str(price*quantity)+" where user_id = "+str(userId)
-    cursor = conn.cursor()
-    cursor.execute(query)
-    conn.commit()
-
-    query = "select count(*) from userportfolio where user_id ='{}' and ticker = '{}'".format(userId, ticker)
-    cursor = conn.cursor()
-    cursor.execute(query)
-    count = cursor.fetchall()[0][0]
-    if (count == 0):
-        query = "Insert into userportfolio (user_id,ticker,nb_shares) values ('{}','{}','{}')".format(
-            userId, ticker, quantity)
+    try:
+        if (cash < price*quantity):
+            raise Exception("Not Enough Cash")
+        query = "Update usercash set cash = cash - " + \
+            str(price*quantity)+" where user_id = "+str(userId)
         cursor = conn.cursor()
         cursor.execute(query)
         conn.commit()
 
-    else:
-        query = "Update userportfolio set nb_shares = nb_shares +{} where user_id ='{}' and ticker = '{}' ".format(
-            quantity, userId, ticker)
+        query = "select count(*) from userportfolio where user_id ='{}' and ticker = '{}'".format(
+            userId, ticker)
         cursor = conn.cursor()
         cursor.execute(query)
-        conn.commit()
+        count = cursor.fetchall()[0][0]
+        if (count == 0):
+            query = "Insert into userportfolio (user_id,ticker,nb_shares) values ('{}','{}','{}')".format(
+                userId, ticker, quantity)
+            cursor = conn.cursor()
+            cursor.execute(query)
+            conn.commit()
+
+        else:
+            query = "Update userportfolio set nb_shares = nb_shares +{} where user_id ='{}' and ticker = '{}' ".format(
+                quantity, userId, ticker)
+            cursor = conn.cursor()
+            cursor.execute(query)
+            conn.commit()
+    except Exception as e:
+        print(e)
+        flash("You don't have enough cash!", 'buy')
 
 
 # this function will sell a number of stocks of a given company from a users portfolio. It will raise an exception if the quanitity sold
@@ -112,37 +117,42 @@ def sell_stock(userId, ticker, quantity):
     cursor = conn.cursor()
     cursor.execute(query)
     nb_shares = cursor.fetchall()[0][0]
-    if nb_shares < quantity:
-        raise Exception("User doesn't have that quantity of shares")
+    try:
+        if nb_shares < quantity:
+            raise Exception("User doesn't have that quantity of shares")
 
-    elif nb_shares == quantity:
-        query = "delete from userportfolio where user_id ='{}' and ticker = '{}'".format(
-            userId, ticker)
-        cursor = conn.cursor()
-        cursor.execute(query)
-        conn.commit()
+        elif nb_shares == quantity:
+            query = "delete from userportfolio where user_id ='{}' and ticker = '{}'".format(
+                userId, ticker)
+            cursor = conn.cursor()
+            cursor.execute(query)
+            conn.commit()
 
-        query = "Update usercash set cash = cash + " + \
-            str(price*quantity)+" where user_id = "+str(userId)
-        cursor = conn.cursor()
-        cursor.execute(query)
-        conn.commit()
+            query = "Update usercash set cash = cash + " + \
+                str(price*quantity)+" where user_id = "+str(userId)
+            cursor = conn.cursor()
+            cursor.execute(query)
+            conn.commit()
 
-    else:
-        query = "Update userportfolio set nb_shares = nb_shares -{} where user_id ='{}' and ticker = '{}' ".format(
-            quantity, userId, ticker)
-        cursor = conn.cursor()
-        cursor.execute(query)
-        conn.commit()
+        else:
+            query = "Update userportfolio set nb_shares = nb_shares -{} where user_id ='{}' and ticker = '{}' ".format(
+                quantity, userId, ticker)
+            cursor = conn.cursor()
+            cursor.execute(query)
+            conn.commit()
 
-        query = "Update usercash set cash = cash + " + \
-            str(price*quantity)+" where user_id = "+str(userId)
-        cursor = conn.cursor()
-        cursor.execute(query)
-        conn.commit()
+            query = "Update usercash set cash = cash + " + \
+                str(price*quantity)+" where user_id = "+str(userId)
+            cursor = conn.cursor()
+            cursor.execute(query)
+            conn.commit()
+    except Exception as e:
+        print(e)
+        flash("You don't have enough stocks!", 'sell')
+
+        # this function takes as input userId and returns a dataframe showing what stocks the user owns and their values
 
 
-# this function takes as input userId and returns a dataframe showing what stocks the user owns and their values
 def view_portfolio(userId):
     conn = psycopg2.connect(
         database="STEM", user='postgres',
@@ -153,7 +163,8 @@ def view_portfolio(userId):
     cursor = conn.cursor()
     cursor.execute(query)
     data = cursor.fetchall()
-
+    if(len(data) == 0):
+        return []
     col = ['ticker', 'nb_shares']  # defining the column name
     df = pd.DataFrame(data, columns=col)
 
@@ -181,3 +192,17 @@ def portfolio_chart(df):
 
     fig.add_trace(Pie)
     return fig
+
+
+# returns number of shares of particular stock
+def nb_shares(userId, ticker):
+    conn = psycopg2.connect(
+        database="STEM", user='postgres',
+        password='admin', host='localhost', port='5432')
+    query = "select nb_shares from userportfolio where user_id ='{}' and ticker = '{}'".format(
+        userId, ticker)
+    cursor = conn.cursor()
+    cursor.execute(query)
+    count = cursor.fetchall()
+    count = count[0][0] if len(count) != 0 else 0
+    return count

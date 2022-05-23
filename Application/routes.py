@@ -27,15 +27,21 @@ def index():
 
 @app.route("/candleStickChart", methods=['GET', 'POST'])
 def candleStickChart():
-    # Buy Function
+    # Buy  /Sell Function
     if request.method == 'POST':
         id = request.form['id']
         name = request.form['company']
-        cash = request.form['cash']
-        UserPortfolioTools.buy_stock(id, name, int(cash))
+        count = request.form['count']
+        if request.form['type'] == 'buy':
+            UserPortfolioTools.buy_stock(id, name, int(count))
+        elif request.form['type'] == 'sell':
+            UserPortfolioTools.sell_stock(id, name, int(count))
         return redirect('/candleStickChart?company='+name)
+
     select = getCompanies()
     name = request.args.get('company')
+    id = session.get('user_id')
+    nb_shares = UserPortfolioTools.nb_shares(id, name) if g.user else ''
     indicators = request.args.getlist('indicators')
     df = getStockPrice(name)
 
@@ -137,7 +143,8 @@ def candleStickChart():
                            fund_figure4=fund_figure4,
                            fund_figure5=fund_figure5,
                            company=name,
-                           options1=select
+                           options1=select,
+                           nb_shares=nb_shares
                            )
 
 
@@ -190,6 +197,8 @@ def register():
 def portfolio():
     id = g.user.get_id()
     df = valueAtRisk.view_portfolio(id)
+    if len(df) == 0:
+        return "Your portfolio is empty!"
     recommend = recommendation.recommendation_portfolio(id)
     decrease_var = valueAtRisk.decrease_VaR_Portfolio(id)
     return render_template("portfolio.html",

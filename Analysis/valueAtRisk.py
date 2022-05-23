@@ -51,7 +51,7 @@ def VaR_Portfolio(userId):
 def var_percent(userId):
     df = view_portfolio(userId)
     total = round(sum(df['current_value']), 2)
-    return(total, round(VaR_Portfolio(userId)/total, 2))
+    return(total, round(100*VaR_Portfolio(userId)/total, 2))
 
 
 # this function finds the stock with the highest value at risk  in the portfolio
