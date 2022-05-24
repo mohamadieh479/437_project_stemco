@@ -19,7 +19,9 @@
             <input type="submit" name = "" value = "Select" >
         </form>
         <div class="cash-on-hand">
-            <b>Cash on hand:</b> $ {{g.user.get_user_cash()}}
+            {% if g.user %}
+                <b>Cash on hand:</b> $ {{g.user.get_user_cash()}}
+            {% endif %}
         </div>
         
     </nav>
